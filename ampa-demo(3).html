@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMPA — Account Marketing Planning Agent</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#F8FAFC;color:#0F172A;min-height:100vh}
+.demo-banner{background:linear-gradient(135deg,#4338CA,#6366F1);color:#fff;text-align:center;padding:10px 20px;font-size:12px;font-weight:700;letter-spacing:0.04em}
+.demo-banner a{color:#C7D2FE;text-decoration:underline}
+header{background:#fff;border-bottom:1px solid #E2E8F0;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:36px;z-index:50}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.logo-name{font-weight:900;font-size:15px;letter-spacing:-0.025em}
+.logo-sub{font-size:12px;color:#94A3B8;font-weight:500}
+.version-badge{font-size:10px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;color:#6366F1;background:#EEF2FF;padding:5px 10px;border-radius:6px}
+.wrap{max-width:880px;margin:0 auto;padding:40px 24px 100px}
+.card{background:#fff;border-radius:16px;border:1px solid #E2E8F0;padding:28px;margin-bottom:20px;box-shadow:0 1px 4px rgba(15,23,42,.05)}
+.account-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px}
+.account-name{font-size:28px;font-weight:900;letter-spacing:-0.03em}
+.account-meta{font-size:13px;color:#475569;margin-top:4px}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#94A3B8;margin-bottom:4px}
+.tier-badge{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:12px;background:#DCFCE7;border:2px solid #BBF7D0}
+.tier-letter{font-size:26px;font-weight:900;color:#166534;line-height:1}
+.tier-label{font-size:12px;font-weight:700;color:#166534}
+.tier-sub{font-size:10px;font-weight:700;color:#166534;letter-spacing:0.06em;text-transform:uppercase}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.section-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.section-title{font-size:16px;font-weight:800;letter-spacing:-0.02em;color:#0F172A}
+.score-row{margin-bottom:14px}
+.score-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:13px}
+.score-label{color:#475569;font-weight:500}
+.score-val{font-weight:800}
+.score-track{height:5px;background:#F1F5F9;border-radius:99px;overflow:hidden}
+.score-fill{height:100%;border-radius:99px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat-box{padding:14px;background:#F1F5F9;border-radius:10px}
+.stat-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#94A3B8;margin-bottom:4px}
+.stat-val{font-size:13px;font-weight:600;color:#0F172A}
+.info-box{padding:16px;background:#F1F5F9;border-radius:10px}
+.info-label{font-size:10px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:#94A3B8;margin-bottom:8px}
+.info-val{font-size:13px;color:#475569;line-height:1.65}
+.tech-item{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.tech-name{font-size:13px;font-weight:500;color:#0F172A}
+.conf-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;letter-spacing:0.06em;text-transform:uppercase}
+.conf-high{background:#DCFCE7;color:#166534}
+.conf-med{background:#FEF9C3;color:#854D0E}
+.conf-low{background:#FEE2E2;color:#991B1B}
+.signal-row{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 16px;background:#F1F5F9;border-radius:10px;gap:16px;margin-bottom:10px}
+.signal-type{font-size:11px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.signal-detail{font-size:13px;color:#475569;line-height:1.5}
+.strength-tag{font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;letter-spacing:0.06em;text-transform:uppercase;white-space:nowrap}
+.str-strong{background:#DCFCE7;color:#166534}
+.str-med{background:#FEF9C3;color:#854D0E}
+.str-weak{background:#F1F5F9;color:#64748B}
+.persona-card{padding:18px;background:#F1F5F9;border-radius:12px;margin-bottom:12px}
+.persona-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.persona-avatar{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:900;flex-shrink:0}
+.persona-title{font-weight:800;font-size:14px;color:#0F172A}
+.p-field-label{font-size:10px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.p-field-val{font-size:13px;color:#475569;line-height:1.55}
+.motion-badge{display:inline-flex;align-items:center;gap:8px;background:#EEF2FF;padding:8px 14px;border-radius:8px;margin-bottom:16px;border:1px solid #C7D2FE}
+.motion-label{font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.06em}
+.motion-val{font-size:14px;font-weight:800;color:#4338CA}
+.channel-list{padding:14px;background:#F1F5F9;border-radius:10px}
+.channel-head{font-size:11px;font-weight:700;margin-bottom:10px}
+.channel-item{display:flex;align-items:center;gap:6px;font-size:13px;color:#475569;padding:3px 0}
+.channel-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;display:inline-block}
+.cta-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px}
+.cta-box{padding:14px;background:#EEF2FF;border-radius:10px;border:1px solid #C7D2FE}
+.cta-label{font-size:10px;font-weight:700;color:#6366F1;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px}
+.cta-val{font-size:13px;font-weight:600;color:#1E1B4B}
+.handoff-card{background:linear-gradient(135deg,#1E1B4B,#312E81);border:none;box-shadow:0 4px 24px rgba(99,102,241,.2)}
+.handoff-icon-row{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.handoff-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.handoff-title{font-size:16px;font-weight:800;letter-spacing:-0.02em;color:#E0E7FF}
+.handoff-text{font-size:15px;color:#C7D2FE;line-height:1.8;font-style:italic}
+.rationale-box{margin-top:16px;padding:14px 16px;background:#F1F5F9;border-radius:10px;font-size:13px;color:#475569;line-height:1.65}
+.arrow{color:#6366F1;font-weight:700;flex-shrink:0}
+.discovery-q{display:flex;gap:8px;font-size:13px;color:#475569;padding:4px 0}
+.objection{font-size:13px;color:#475569;padding:4px 0;line-height:1.5}
+.obj-mark{color:#EF4444;font-weight:700}
+.about-btn{background:none;border:1.5px solid #E2E8F0;cursor:pointer;color:#475569;font-size:13px;font-weight:700;font-family:inherit;padding:10px 18px;border-radius:10px;display:flex;align-items:center;gap:8px;margin-top:32px}
+.about-panel{margin-top:14px;padding:28px;border-radius:16px;border:1.5px solid #C7D2FE;background:#EEF2FF}
+.about-title{font-size:16px;font-weight:900;color:#0F172A;letter-spacing:-0.02em;margin-bottom:6px}
+.about-by{font-size:13px;color:#6366F1;font-weight:700;margin-bottom:20px}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.about-box{padding:16px;background:#fff;border-radius:12px;border:1px solid #C7D2FE}
+.about-box-label{font-size:12px;font-weight:800;color:#4338CA;margin-bottom:8px}
+.about-box-val{font-size:13px;color:#475569;line-height:1.6}
+.vision-box{padding:16px 20px;background:#fff;border-radius:12px;border:1px solid #C7D2FE;margin-bottom:16px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.pill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;background:#fff;border:1.5px solid #C7D2FE;color:#6366F1;letter-spacing:0.04em}
+footer{margin-top:40px;padding-top:24px;border-top:1px solid #E2E8F0;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-logo{display:flex;align-items:center;gap:10px}
+.footer-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#6366F1,#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:14px}
+.footer-name{font-size:12px;font-weight:800;color:#0F172A;letter-spacing:-0.01em}
+.footer-v{font-size:11px;color:#94A3B8}
+.footer-right{text-align:right}
+.footer-built{font-size:12px;font-weight:700;color:#475569}
+.footer-role{font-size:11px;color:#94A3B8}
+.footer-link{font-size:11px;color:#6366F1;font-weight:600;text-decoration:none}
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  📊 Demo Mode — Sample brief for JPMorgan Chase · Nvidia Enterprise Revenue Marketing · <a href="https://claude.ai" target="_blank">Open in Claude.ai</a> for live generation
+</div>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <div>
+      <div class="logo-name">Account Marketing Planning Agent</div>
+      <div class="logo-sub">AI-powered B2B revenue intelligence</div>
+    </div>
+  </div>
+  <div class="version-badge">AMPA v2.0</div>
+</header>
+
+<div class="wrap">
+
+  <!-- Account Header -->
+  <div class="account-header">
+    <div>
+      <div class="eyebrow">Account Brief</div>
+      <div class="account-name">JPMorgan Chase</div>
+      <div class="account-meta">Financial Services · AI & Enterprise Technology · Public</div>
+    </div>
+    <div class="tier-badge">
+      <div class="tier-letter">A</div>
+      <div><div class="tier-sub">Tier</div><div class="tier-label">High Priority</div></div>
+    </div>
+  </div>
+
+  <!-- Scores -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">📊</div><div class="section-title">Account Prioritization Scores</div></div>
+    <div class="grid2">
+      <div>
+        <div class="score-row"><div class="score-label-row"><span class="score-label">ICP Fit</span><span class="score-val" style="color:#22C55E">9/10</span></div><div class="score-track"><div class="score-fill" style="width:90%;background:#22C55E"></div></div></div>
+        <div class="score-row"><div class="score-label-row"><span class="score-label">Expansion Potential</span><span class="score-val" style="color:#22C55E">8/10</span></div><div class="score-track"><div class="score-fill" style="width:80%;background:#22C55E"></div></div></div>
+        <div class="score-row"><div class="score-label-row"><span class="score-label">Pipeline Potential</span><span class="score-val" style="color:#22C55E">8/10</span></div><div class="score-track"><div class="score-fill" style="width:80%;background:#22C55E"></div></div></div>
+      </div>
+      <div>
+        <div class="score-row"><div class="score-label-row"><span class="score-label">Intent Signals</span><span class="score-val" style="color:#22C55E">8/10</span></div><div class="score-track"><div class="score-fill" style="width:80%;background:#22C55E"></div></div></div>
+        <div class="score-row"><div class="score-label-row"><span class="score-label">Strategic Value</span><span class="score-val" style="color:#22C55E">9/10</span></div><div class="score-track"><div class="score-fill" style="width:90%;background:#22C55E"></div></div></div>
+      </div>
+    </div>
+    <div class="rationale-box">JPMorgan Chase is a Tier A strategic account with exceptional ICP alignment — $1.5B+ committed to AI investment and 200+ AI models in production create immediate AI security technology demand. Jamie Dimon has publicly stated AI is existential for the firm's competitiveness. With thousands of ML engineers actively hiring and multiple AI products launching, the window to establish a preferred security technology partner is open now.</div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">🎯</div><div class="section-title">Executive Summary</div></div>
+    <div class="grid2">
+      <div class="info-box"><div class="info-label">Why This Account</div><div class="info-val">JPMorgan Chase has committed $1.5B+ to AI and has 200+ AI models in active production — all requiring AI security infrastructure at scale. Their Chief AI & Data Analytics Officer, Teresa Heitsenrether, is driving enterprise-wide AI adoption across trading, risk, fraud detection, and customer experience. This is one of our highest-priority financial services accounts globally.</div></div>
+      <div class="info-box"><div class="info-label">Recommended GTM Motion</div><div class="info-val">Strategic Account Executive ABM — C-suite first, solution architect-supported engagement with dedicated account team. Position positioning as the AI security backbone of JPMorgan's AI transformation.</div></div>
+      <div class="info-box"><div class="info-label">Marketing Angle</div><div class="info-val">AI infrastructure at financial services scale — positioning AI-powereds as the only infrastructure capable of training and running JPMorgan's most complex AI models at the speed and accuracy required for financial decision-making.</div></div>
+      <div class="info-box"><div class="info-label">Sales Angle</div><div class="info-val">Infrastructure partnership play — demonstrate how the full platform stack accelerates JPMorgan's existing AI roadmap and reduces time-to-production for new models from months to weeks.</div></div>
+    </div>
+  </div>
+
+  <!-- Company Profile -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">🏢</div><div class="section-title">Company Profile</div></div>
+    <div class="grid3" style="margin-bottom:16px">
+      <div class="stat-box"><div class="stat-label">Industry</div><div class="stat-val">Financial Services & AI</div></div>
+      <div class="stat-box"><div class="stat-label">Revenue (est.)</div><div class="stat-val">$158B revenue (FY2024)</div></div>
+      <div class="stat-box"><div class="stat-label">Employees (est.)</div><div class="stat-val">~310,000 employees</div></div>
+      <div class="stat-box"><div class="stat-label">Status</div><div class="stat-val">Public (OKTA)</div></div>
+      <div class="stat-box"><div class="stat-label">Geography</div><div class="stat-val">Global — HQ San Francisco</div></div>
+    </div>
+    <p style="font-size:14px;color:#475569;line-height:1.7;margin-bottom:16px">JPMorgan Chase is the largest U.S. bank by assets ($3.9T) and one of the most aggressive AI adopters in global financial services. Under CEO Jamie Dimon and Chief AI Officer Teresa Heitsenrether, the firm has deployed 200+ AI use cases across trading, risk, fraud detection, and customer experience — with a stated $1.5B+ annual AI investment.</p>
+    <div class="info-label" style="margin-bottom:10px">Recent Initiatives</div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;gap:8px;font-size:13px;color:#475569"><span class="arrow">→</span>Deployed LLM Suite — internal GPT-4-based tool used by 60,000+ employees for productivity and coding</div>
+      <div style="display:flex;gap:8px;font-size:13px;color:#475569"><span class="arrow">→</span>Launched AI-powered fraud detection models processing 10B+ transactions daily — requires AI-powered detection at scale</div>
+      <div style="display:flex;gap:8px;font-size:13px;color:#475569"><span class="arrow">→</span>Expanded Privileged Access Management to compete with CyberArk and BeyondTrust</div>
+      <div style="display:flex;gap:8px;font-size:13px;color:#475569"><span class="arrow">→</span>Announced $12B technology investment for 2024 — AI infrastructure and data center expansion are top priorities</div>
+    </div>
+  </div>
+
+  <!-- Tech Environment -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">💻</div><div class="section-title">Technology Environment</div></div>
+    <div class="grid2">
+      <div class="info-box">
+        <div class="info-label">Cloud Providers</div>
+        <div class="tech-item"><span class="tech-name">AWS</span><span class="conf-tag conf-high">High</span></div>
+        <div class="tech-item"><span class="tech-name">Azure</span><span class="conf-tag conf-high">High</span></div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Security Vendors</div>
+        <div class="tech-item"><span class="tech-name">AI Security Platform</span><span class="conf-tag conf-high">High</span></div>
+        <div class="tech-item"><span class="tech-name">CrowdStrike</span><span class="conf-tag conf-high">High</span></div>
+        <div class="tech-item"><span class="tech-name">Splunk</span><span class="conf-tag conf-high">High</span></div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">CRM</div>
+        <div class="tech-item"><span class="tech-name">Salesforce</span><span class="conf-tag conf-high">High</span></div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Marketing Automation</div>
+        <div class="tech-item"><span class="tech-name">Marketo</span><span class="conf-tag conf-high">High</span></div>
+        <div class="tech-item"><span class="tech-name">Adobe Analytics</span><span class="conf-tag conf-med">Medium</span></div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Data & Analytics</div>
+        <div class="tech-item"><span class="tech-name">Tableau</span><span class="conf-tag conf-high">High</span></div>
+        <div class="tech-item"><span class="tech-name">Databricks</span><span class="conf-tag conf-high">High</span></div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Identity Vendors</div>
+        <div class="tech-item"><span class="tech-name">Snowflake</span><span class="conf-tag conf-high">High</span></div>
+        <div class="tech-item"><span class="tech-name">Databricks</span><span class="conf-tag conf-high">High</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buying Signals -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">📡</div><div class="section-title">Buying Signals</div></div>
+    <div class="signal-row"><div style="flex:1"><div class="signal-type">AI Investment Signal</div><div class="signal-detail">$1.5B+ annual AI investment announced publicly by CEO Jamie Dimon — active infrastructure build-out and AI security procurement cycles underway at enterprise scale.</div></div><span class="strength-tag str-strong">Strong</span></div>
+    <div class="signal-row"><div style="flex:1"><div class="signal-type">Hiring Trends</div><div class="signal-detail">3,000+ open ML engineering and AI infrastructure roles — headcount investment at this scale requires AI model infrastructure and confirms active model development across divisions.</div></div><span class="strength-tag str-strong">Strong</span></div>
+    <div class="signal-row"><div style="flex:1"><div class="signal-type">AI Initiative</div><div class="signal-detail">LLM Suite deployed to 60,000+ employees — internal AI product at this scale requires ongoing AI compute capacity for inference and model training, and next-generation model development.</div></div><span class="strength-tag str-strong">Strong</span></div>
+    <div class="signal-row"><div style="flex:1"><div class="signal-type">Regulatory Pressure</div><div class="signal-detail">Federal regulators require JPMorgan to validate AI model risk — creates urgency for enterprise-grade AI infrastructure with audit trails, explainability, and compliance tooling.</div></div><span class="strength-tag str-med">Medium</span></div>
+    <div class="signal-row"><div style="flex:1"><div class="signal-type">Data Center Expansion</div><div class="signal-detail">$12B technology investment includes significant data center and compute infrastructure expansion — active procurement cycle for AI infrastructure clusters and AI accelerators.</div></div><span class="strength-tag str-strong">Strong</span></div>
+    <div class="signal-row"><div style="flex:1"><div class="signal-type">Executive Champion</div><div class="signal-detail">Teresa Heitsenrether named Chief AI & Data Analytics Officer — dedicated C-suite AI leader with board mandate signals centralized AI security infrastructure procurement authority.</div></div><span class="strength-tag str-med">Medium</span></div>
+  </div>
+
+  <!-- Personas -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">👥</div><div class="section-title">Persona Analysis</div></div>
+    <div class="persona-card">
+      <div class="persona-head"><div class="persona-avatar">CA</div><div class="persona-title">Chief AI & Data Analytics Officer</div></div>
+      <div class="grid2">
+        <div><div class="p-field-label">Goals</div><div class="p-field-val">Accelerate AI model deployment across trading, risk, and customer experience. Reduce time-to-production for new models. Build an AI infrastructure that scales to hundreds of models in production.</div></div>
+        <div><div class="p-field-label">Pain Points</div><div class="p-field-val">AI infrastructure bottlenecks slowing security model deployment cycles. Regulatory requirements for model explainability and audit trails. Competitive pressure from Goldman Sachs and Morgan Stanley on AI capabilities.</div></div>
+        <div><div class="p-field-label">Messaging Angle</div><div class="p-field-val">Position our platform as the infrastructure layer that accelerates every AI initiative already on her roadmap — faster training, lower cost per model, and enterprise-grade compliance tooling built in.</div></div>
+        <div><div class="p-field-label">Best Content Offer</div><div class="p-field-val">Executive briefing: "AI Security at Financial Services Scale — How JPMorgan Can Train 10x More Models with the Same Team"</div></div>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-head"><div class="persona-avatar">CT</div><div class="persona-title">Chief Technology Officer</div></div>
+      <div class="grid2">
+        <div><div class="p-field-label">Goals</div><div class="p-field-val">Deliver the $12B technology investment on time and on budget. Build infrastructure that supports both current AI workloads and next-generation model requirements. Reduce vendor complexity.</div></div>
+        <div><div class="p-field-label">Pain Points</div><div class="p-field-val">AI security platform procurement timelines creating bottlenecks. Multi-vendor complexity across cloud and on-premise infrastructure. Pressure to show ROI on $12B tech investment within 18 months.</div></div>
+        <div><div class="p-field-label">Messaging Angle</div><div class="p-field-val">Platform consolidation and infrastructure simplification — our platform as the single AI infrastructure standard across cloud and on-premise, reducing vendor complexity and accelerating delivery timelines.</div></div>
+        <div><div class="p-field-label">Best Content Offer</div><div class="p-field-val">Architecture review: "the platform Reference Architecture for Financial Services — Compliance, Scale, and Speed"</div></div>
+      </div>
+    </div>
+    <div class="persona-card">
+      <div class="persona-head"><div class="persona-avatar">VP</div><div class="persona-title">VP of AI Infrastructure & Engineering</div></div>
+      <div class="grid2">
+        <div><div class="p-field-label">Goals</div><div class="p-field-val">Build and operate the AI infrastructure cluster infrastructure supporting 200+ AI models in production. Optimize cost per deployment. Ensure infrastructure can scale from current workloads to 10x within 24 months.</div></div>
+        <div><div class="p-field-label">Pain Points</div><div class="p-field-val">AI platform availability and procurement timelines creating planning uncertainty. Cost optimization pressure as AI infrastructure spend scales. Integration complexity between cloud and on-premise security infrastructure.</div></div>
+        <div><div class="p-field-label">Messaging Angle</div><div class="p-field-val">Total infrastructure ROI — our platform's full stack (H100/H200 clusters, NIM microservices, AI Enterprise) reduces cost per inference, accelerates model deployment, and provides a clear path to scale.</div></div>
+        <div><div class="p-field-label">Best Content Offer</div><div class="p-field-val">TCO analysis: "AI Security Platform ROI at Scale — Cost per Model Training Run vs. Competing Architectures"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campaign Rec -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">🚀</div><div class="section-title">Campaign Recommendation</div></div>
+    <div class="motion-badge"><span class="motion-label">Primary Motion</span><span class="motion-val">Executive ABM</span></div>
+    <p style="font-size:14px;color:#475569;line-height:1.7;margin-bottom:20px">JPMorgan Chase is one of our highest-priority financial services accounts globally. The $1.5B+ AI investment, dedicated Chief AI Officer, and 3,000+ ML engineering hires signal active infrastructure procurement at a scale that demands dedicated executive ABM — not broad demand gen. This account requires a solution architect-supported, C-suite-first approach with JPMorgan-specific proof points and ROI modeling.</p>
+    <div class="grid2" style="margin-bottom:14px">
+      <div class="channel-list">
+        <div class="channel-head" style="color:#166534">🟢 Tier 1 Channels</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#22C55E"></span>Dedicated account team — AE + solution architect pair</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#22C55E"></span>Executive AI briefing center (our platform HQ or NYC)</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#22C55E"></span>JPMorgan AI Research Center partnership</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#22C55E"></span>Financial services CTO/CAIO roundtable</div>
+      </div>
+      <div class="channel-list">
+        <div class="channel-head" style="color:#854D0E">🟡 Tier 2 Channels</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#F59E0B"></span>Sponsored CISO-focused podcast</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#F59E0B"></span>Account-targeted LinkedIn ads</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#F59E0B"></span>Gartner/Forrester analyst briefings</div>
+      </div>
+      <div class="channel-list">
+        <div class="channel-head" style="color:#991B1B">🔴 Channels to Avoid</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#EF4444"></span>Broad email nurture</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#EF4444"></span>Trade show booth</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#EF4444"></span>Generic webinars</div>
+      </div>
+      <div class="channel-list">
+        <div class="channel-head" style="color:#4338CA">📈 KPIs</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#6366F1"></span>Executive meetings secured</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#6366F1"></span>Pipeline influenced ($)</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#6366F1"></span>Account engagement score</div>
+        <div class="channel-item"><span class="channel-dot" style="background:#6366F1"></span>Content asset downloads by persona</div>
+      </div>
+    </div>
+    <div class="cta-grid">
+      <div class="cta-box"><div class="cta-label">Campaign Theme</div><div class="cta-val">AI-Powered Security at Enterprise Scale — Protecting What Matters Most</div></div>
+      <div class="cta-box"><div class="cta-label">Content Asset</div><div class="cta-val">Executive ROI Brief: "AI Security at Financial Services Scale" — enterprise AI security reference architecture</div></div>
+      <div class="cta-box"><div class="cta-label">Suggested CTA</div><div class="cta-val">Request a private AI infrastructure briefing with solution architects and security specialists and financial services specialists</div></div>
+    </div>
+  </div>
+
+  <!-- Sales Activation -->
+  <div class="card">
+    <div class="section-head"><div class="section-icon">💼</div><div class="section-title">Sales Activation</div></div>
+    <div class="info-box" style="margin-bottom:14px">
+      <div class="info-label">SDR Outreach Angle</div>
+      <div class="info-val">Lead with JPMorgan's specific AI initiatives — the LLM Suite, fraud detection at 10B transactions/day, and the AI Research Center. Frame your outreach around one question: "Is your AI security infrastructure scaling as fast as your AI ambitions?" Connect our platform's stack directly to their publicly stated AI goals and timelines.</div>
+    </div>
+    <div class="grid2">
+      <div class="info-box"><div class="info-label">Executive Email Theme</div><div style="font-size:13px;font-weight:600;color:#0F172A">The infrastructure question every JPMorgan AI team is asking — and how our platform answers it</div></div>
+      <div class="info-box"><div class="info-label">Follow-up Asset</div><div style="font-size:13px;font-weight:600;color:#0F172A">AI Infrastructure Readiness Assessment — benchmarks JPMorgan's AI security deployment speed against peer financial institutions</div></div>
+      <div class="info-box">
+        <div class="info-label">Discovery Questions</div>
+        <div class="discovery-q"><span style="color:#6366F1;font-weight:800;flex-shrink:0">1.</span>With 200+ AI models in production and thousands of ML engineers actively building, what are your biggest AI security infrastructure bottlenecks today — and how are they affecting model deployment timelines?</div>
+        <div class="discovery-q"><span style="color:#6366F1;font-weight:800;flex-shrink:0">2.</span>As you scale from 200 to potentially 2,000 AI models over the next 3 years, how are you thinking about infrastructure standardization across on-premise and cloud security infrastructure?</div>
+        <div class="discovery-q"><span style="color:#6366F1;font-weight:800;flex-shrink:0">3.</span>Given the regulatory requirements around AI model risk and explainability in financial services, how is your infrastructure strategy accounting for compliance and audit trail requirements at scale?</div>
+      </div>
+      <div class="info-box">
+        <div class="info-label">Objection Handling</div>
+        <div class="objection"><span class="obj-mark">▸ </span>We're focused on integrating acquisitions right now: Acknowledge the complexity, then position as the integration layer that accelerates their acquisition value — not another point solution.</div>
+        <div class="objection" style="margin-top:8px"><span class="obj-mark">▸ </span>We have existing vendor relationships: Ask which specific capability they mean, then map your differentiation to the exact gap their current stack doesn't address.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Executive Handoff -->
+  <div class="card handoff-card">
+    <div class="handoff-icon-row"><div class="handoff-icon">✉️</div><div class="handoff-title">Executive Handoff</div></div>
+    <p class="handoff-text">"JPMorgan Chase is one of the highest-priority enterprise accounts available — and the timing has never been better. A $1.5B+ AI investment, a dedicated Chief AI Officer with board mandate, 3,000+ ML engineers actively building, and a CEO who has publicly staked the firm's competitiveness on AI. Every one of those models needs AI security infrastructure to train and run. The question isn't whether we belong in this account — it's whether we move fast enough to become the standard before the procurement decisions are made. We need executive-to-executive engagement this quarter. This is a generational account opportunity."</p>
+  </div>
+
+  <!-- How I Built This -->
+  <button class="about-btn" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none';this.querySelector('.btn-text').textContent=this.nextElementSibling.style.display==='none'?'How I built this':'Hide'">
+    <span>ℹ️</span><span class="btn-text">How I built this</span>
+  </button>
+  <div class="about-panel" style="display:none">
+    <div class="about-title">Account Marketing Planning Agent (AMPA)</div>
+    <div class="about-by">Built by Megan Cleary · Senior Demand Generation & Campaign Marketing Leader</div>
+    <p style="font-size:14px;color:#475569;line-height:1.75;margin-bottom:16px">AMPA operationalizes the account intelligence and campaign planning process I ran at our platform — where a structured ABM approach drove <strong style="color:#0F172A">$23.5M in bookings</strong> and <strong style="color:#0F172A">$120M+ in influenced pipeline</strong>. This tool compresses hours of account research into under 60 seconds.</p>
+    <div class="about-grid">
+      <div class="about-box"><div class="about-box-label">🧠 AI Model</div><div class="about-box-val">Anthropic Claude (claude-sonnet-4) with two chained API calls — a structured account brief followed by full activation materials generation</div></div>
+      <div class="about-box"><div class="about-box-label">⚙️ Frontend</div><div class="about-box-val">React application with JSON-structured API outputs, copy-to-clipboard on all outreach assets, and a clean SaaS UI</div></div>
+      <div class="about-box"><div class="about-box-label">🔗 Integration Ready</div><div class="about-box-val">Optional CRM and intent fields connect to Salesforce, Demandbase, Outreach, and LinkedIn via Zapier or direct API</div></div>
+      <div class="about-box"><div class="about-box-label">📐 Framework</div><div class="about-box-val">Prompt engineering mirrors VP Demand Gen, ABM Leader, and RevOps thinking — scoring, signals, personas, campaign motion, outreach, paid media, and Zapier automations</div></div>
+    </div>
+    <div class="vision-box"><div class="about-box-label">🚀 The Bigger Vision</div><p style="font-size:13px;color:#475569;line-height:1.7;margin-top:8px">AMPA is a prototype of a fully integrated revenue intelligence layer — where Salesforce opportunity data, Demandbase intent scores, and Outreach signals feed in automatically, and the output triggers SDR email sequences, Slack alerts to account owners, and LinkedIn campaigns without human intervention. The Zapier automation layer is the connective tissue that makes it real.</p></div>
+    <div class="tags"><span class="pill">Claude API</span><span class="pill">React</span><span class="pill">Prompt Engineering</span><span class="pill">Zapier-ready</span><span class="pill">Demandbase</span><span class="pill">Salesforce</span><span class="pill">Outreach</span><span class="pill">LinkedIn Ads</span><span class="pill">ABM Framework</span><span class="pill">Field Marketing</span></div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">
+      <div class="footer-icon">⚡</div>
+      <div><div class="footer-name">Account Marketing Planning Agent</div><div class="footer-v">AMPA v2.0</div></div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-built">Built by Megan Cleary</div>
+      <div class="footer-role">Senior Demand Generation & Campaign Marketing Leader</div>
+      <a class="footer-link" href="https://linkedin.com/in/megcleary" target="_blank">linkedin.com/in/megcleary</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

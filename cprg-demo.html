@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campaign Performance Report Generator — Demo | Megan Cleary</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#F7FAFD;color:#1C1C1C;min-height:100vh;}
+.header{background:#fff;border-bottom:1px solid #D0DCE8;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.logo-text{font-weight:900;font-size:15px;letter-spacing:-.025em;}
+.logo-sub{font-size:12px;color:#888;}
+.header-right{text-align:right;}
+.header-name{font-size:12px;font-weight:700;}
+.header-link{font-size:11px;color:#2E74B5;font-weight:600;text-decoration:none;}
+.badge{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#2E74B5;background:#EBF4FB;padding:5px 10px;border-radius:6px;}
+.wrap{max-width:900px;margin:0 auto;padding:32px 24px 80px;}
+.demo-banner{background:#FEF9C3;border:1px solid #FDE68A;border-radius:10px;padding:10px 16px;display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:12px;color:#92400E;font-weight:600;}
+.card{background:#fff;border-radius:16px;border:1px solid #D0DCE8;padding:24px;margin-bottom:20px;box-shadow:0 1px 4px rgba(15,23,42,.05);}
+.exec-card{background:linear-gradient(135deg,#1C3557,#0F2540);border:none;box-shadow:0 4px 24px rgba(28,53,87,.2);}
+.section-head{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.section-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.section-title{font-size:15px;font-weight:800;letter-spacing:-.02em;}
+.report-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.report-kicker{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:4px;}
+.report-name{font-size:22px;font-weight:900;letter-spacing:-.03em;color:#1C3557;}
+.report-meta{font-size:13px;color:#4A4A4A;margin-top:4px;}
+.verdict{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:10px;background:#DCFCE7;border:2px solid #BBF7D0;}
+.verdict-text{font-size:14px;font-weight:800;color:#166534;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;}
+.metric{padding:16px;background:#EBF4FB;border-radius:12px;border:1px solid #D0DCE8;}
+.metric-label{font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.metric-value{font-size:22px;font-weight:900;color:#1C3557;letter-spacing:-.02em;}
+.metric-sub{font-size:11px;color:#4A4A4A;margin-top:2px;}
+.metric-sm{padding:12px;background:#EBF4FB;border-radius:10px;}
+.metric-sm .metric-value{font-size:18px;}
+.delta-up{font-size:10px;font-weight:700;color:#16A34A;background:#DCFCE7;padding:1px 6px;border-radius:4px;margin-left:6px;}
+.delta-down{font-size:10px;font-weight:700;color:#DC2626;background:#FEE2E2;padding:1px 6px;border-radius:4px;margin-left:6px;}
+.bm-above{font-size:9px;font-weight:700;color:#166534;background:#DCFCE7;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:3px;}
+.bm-at{font-size:9px;font-weight:700;color:#1C3557;background:#EBF4FB;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:3px;}
+.bm-below{font-size:9px;font-weight:700;color:#92400E;background:#FEF9C3;padding:1px 6px;border-radius:4px;display:inline-block;margin-top:3px;}
+.insight{padding:8px 12px;background:#EBF4FB;border-radius:8px;font-size:12px;color:#4A4A4A;display:flex;gap:8px;margin-top:10px;}
+.insight-arrow{color:#2E74B5;font-weight:700;flex-shrink:0;}
+.cmo-box{padding:14px;background:#EBF4FB;border-radius:12px;border:1.5px solid #DCE9F5;}
+.cmo-label{font-size:10px;font-weight:700;color:#2E74B5;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.cmo-text{font-size:12px;color:#1C3557;line-height:1.5;}
+.sales-box{padding:14px;background:#DCFCE7;border-radius:12px;border:1.5px solid #BBF7D0;}
+.sales-label{font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;}
+.sales-text{font-size:12px;color:#14532D;line-height:1.5;}
+.bar-row{margin-bottom:10px;}
+.bar-labels{display:flex;justify-content:space-between;margin-bottom:4px;font-size:12px;}
+.bar-label-text{color:#4A4A4A;}
+.bar-label-val{font-weight:700;color:#2E74B5;}
+.bar-track{height:5px;background:#EBF4FB;border-radius:99px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:99px;}
+.channel-box{padding:14px;background:#EBF4FB;border-radius:12px;}
+.channel-title{font-size:11px;font-weight:800;color:#1C3557;margin-bottom:10px;text-transform:uppercase;letter-spacing:.06em;}
+.channel-row{margin-bottom:6px;}
+.channel-key{font-size:11px;color:#4A4A4A;}
+.channel-val{font-size:12px;font-weight:700;color:#1C3557;}
+.channel-flex{display:flex;justify-content:space-between;align-items:center;}
+.win{display:flex;gap:8px;padding:10px;background:#DCFCE7;border-radius:8px;border:1px solid #BBF7D0;margin-bottom:6px;}
+.win-check{color:#16A34A;font-weight:900;flex-shrink:0;}
+.win-text{font-size:12px;color:#14532D;line-height:1.5;}
+.fix{display:flex;gap:8px;padding:10px;background:#FEF9C3;border-radius:8px;border:1px solid #FDE68A;margin-bottom:6px;}
+.fix-arrow{color:#D97706;font-weight:900;flex-shrink:0;}
+.fix-text{font-size:12px;color:#78350F;line-height:1.5;}
+.next-item{display:flex;gap:10px;padding:10px;background:#EBF4FB;border-radius:8px;margin-bottom:8px;}
+.next-num{width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:900;flex-shrink:0;}
+.next-text{font-size:12px;color:#4A4A4A;line-height:1.5;padding-top:1px;}
+.roi-box{padding:12px;background:#EBF4FB;border-radius:8px;border:1px solid #DCE9F5;text-align:center;}
+.roi-label{font-size:9px;color:#2E74B5;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.07em;}
+.roi-value{font-size:20px;font-weight:900;color:#1C3557;}
+.footer{margin-top:40px;padding-top:24px;border-top:1px solid #D0DCE8;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-left{display:flex;align-items:center;gap:10px;}
+.footer-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.footer-tool{font-size:12px;font-weight:800;}
+.footer-sub{font-size:11px;color:#888;}
+.footer-right{text-align:right;}
+.footer-name{font-size:12px;font-weight:700;color:#4A4A4A;}
+.footer-copy{font-size:10px;color:#888;margin-top:2px;}
+/* Best/needs attention */
+.best-box{padding:10px 12px;background:#DCFCE7;border-radius:10px;border:1px solid #BBF7D0;}
+.best-label{font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;margin-bottom:3px;}
+.best-text{font-size:12px;color:#14532D;}
+.attn-box{padding:10px 12px;background:#FEF9C3;border-radius:10px;border:1px solid #FDE68A;}
+.attn-label{font-size:10px;font-weight:700;color:#92400E;text-transform:uppercase;margin-bottom:3px;}
+.attn-text{font-size:12px;color:#78350F;}
+/* Funnel */
+.funnel{display:flex;align-items:flex-end;gap:4px;height:100px;}
+.funnel-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.funnel-rate{font-size:9px;font-weight:700;color:#2E74B5;}
+.funnel-bar{width:100%;border-radius:4px 4px 0 0;}
+.funnel-val{font-size:10px;font-weight:700;color:#1C3557;}
+.funnel-lbl{font-size:9px;color:#888;text-align:center;line-height:1.2;}
+.conv-row{margin-bottom:8px;}
+.conv-flex{display:flex;justify-content:space-between;margin-bottom:3px;}
+.conv-label{font-size:11px;color:#4A4A4A;}
+.conv-val{font-size:11px;font-weight:700;}
+.conv-track{height:4px;background:#EBF4FB;border-radius:99px;}
+.conv-fill{height:100%;border-radius:99px;}
+/* Intent sparkline placeholder */
+.sparkline-area{position:relative;height:70px;width:100%;}
+.intent-nums{display:flex;justify-content:space-between;margin-top:4px;}
+.intent-num{font-size:10px;color:#888;}
+.sov-row{margin-bottom:10px;}
+.sov-flex{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.sov-name{font-size:12px;color:#4A4A4A;}
+.sov-val{font-size:12px;font-weight:700;}
+.sov-track{height:5px;background:#EBF4FB;border-radius:99px;}
+.sov-fill{height:100%;border-radius:99px;}
+/* Donut */
+.donut-wrap{text-align:center;padding:16px;background:#EBF4FB;border-radius:12px;}
+.donut-title{font-size:11px;font-weight:700;color:#1C3557;margin-top:6px;}
+.donut-sub{font-size:10px;color:#4A4A4A;}
+.bm-ref{padding:8px 10px;background:#EBF4FB;border-radius:8px;border:1px solid #DCE9F5;font-size:10px;color:#4A4A4A;margin-top:10px;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">
+    <div class="logo-icon">📊</div>
+    <div>
+      <div class="logo-text">Campaign Performance Report Generator</div>
+      <div class="logo-sub">QBR-ready · AI-powered · Multi-channel</div>
+    </div>
+  </div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <div class="header-right">
+      <div class="header-name">Megan Cleary</div>
+      <a href="https://linkedin.com/in/megcleary" class="header-link" target="_blank">linkedin.com/in/megcleary</a>
+    </div>
+    <div class="badge">Demo v2.0</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="demo-banner">
+    ⚠️ Fictional benchmark data — for demo purposes only. In production, metrics auto-populate from Salesforce, Demandbase, LinkedIn Ads, and Google Ads.
+  </div>
+
+  <!-- Report header -->
+  <div class="report-header">
+    <div>
+      <div class="report-kicker">QBR · Campaign Report · Quarter over Quarter</div>
+      <div class="report-name">Zero Trust Now — Enterprise Security Campaign</div>
+      <div class="report-meta">Q2 2025 · Cloud Security Platform · Enterprise — Financial Services & Technology</div>
+    </div>
+    <div class="verdict">
+      <span style="font-size:16px;">🏆</span>
+      <span class="verdict-text">Exceeded Expectations</span>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="card exec-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+      <div class="section-head" style="margin-bottom:0;">
+        <div style="width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:14px;">📋</div>
+        <h2 style="font-size:15px;font-weight:800;color:#DCE9F5;letter-spacing:-.02em;">Executive Summary</h2>
+      </div>
+    </div>
+    <p style="font-size:14px;color:#B8D4F0;line-height:1.8;font-style:italic;margin-bottom:12px;">"Zero Trust Now delivered $18.5M in direct source pipeline against a $750K investment — a 24.7x ROI that exceeded Q2 targets by 31%. Account engagement reached 72%, up 14 points from Q1, with 38 of 45 Tier 1 accounts actively engaged. Intent scores climbed 76% over 8 weeks, signaling a strong pipeline build heading into Q3."</p>
+    <div style="font-size:12px;color:#7EB5E0;border-top:1px solid rgba(255,255,255,.1);padding-top:10px;">24.7x pipeline ROI on $750K investment — strongest performing quarter in four periods. Tier 1 engagement at 84%, up from 61% last quarter.</div>
+  </div>
+
+  <!-- CMO / VP Sales views -->
+  <div class="grid2" style="margin-bottom:20px;">
+    <div class="cmo-box">
+      <div class="cmo-label">📣 For CMO</div>
+      <div class="cmo-text">Program health is strong — 24.7x pipeline ROI and 72% account engagement demonstrate that integrated campaign investment is translating directly to revenue influence at scale.</div>
+    </div>
+    <div class="sales-box">
+      <div class="sales-label">💼 For VP Sales</div>
+      <div class="sales-text">Marketing sourced $18.5M direct pipeline and influenced $67M total — exceeding the joint Q2 target by 28%, with 14 closed-won deals averaging $285K ACV.</div>
+    </div>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">💰</div>
+      <h2 class="section-title">Pipeline & Revenue Impact</h2>
+    </div>
+    <div class="grid3" style="margin-bottom:12px;">
+      <div class="metric">
+        <div class="metric-label">Direct Source Pipeline</div>
+        <div class="metric-value">$18.5M<span class="delta-up">↑30% QoQ</span></div>
+        <div class="metric-sub">Pipeline ROI: 24.7x</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Bookings Influence</div>
+        <div class="metric-value">$42M<span class="delta-up">↑35% QoQ</span></div>
+        <div class="metric-sub">Multi-touch influenced</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Pipeline Influence</div>
+        <div class="metric-value">$67M<span class="delta-up">↑29% QoQ</span></div>
+        <div class="metric-sub">Total influenced pipeline</div>
+      </div>
+    </div>
+    <div class="grid4" style="margin-bottom:12px;">
+      <div class="metric-sm">
+        <div class="metric-label">Won Deals</div>
+        <div class="metric-value">14</div>
+        <div class="metric-sub">Closed won</div>
+      </div>
+      <div class="metric-sm">
+        <div class="metric-label">Avg Deal</div>
+        <div class="metric-value">$285K</div>
+        <div class="metric-sub">Average ACV</div>
+      </div>
+      <div class="metric-sm">
+        <div class="metric-label">Contact Influence</div>
+        <div class="metric-value">240</div>
+        <div class="metric-sub">Touched pre-opp</div>
+      </div>
+      <div class="metric-sm">
+        <div class="metric-label">Sales Cycle</div>
+        <div class="metric-value">94d</div>
+        <div class="metric-sub">Avg to close</div>
+      </div>
+    </div>
+    <div class="insight"><span class="insight-arrow">→</span>Direct source pipeline was driven primarily by RSA Conference ($6.2M attributed) and email nurture sequences ($4.8M) — event-sourced pipeline converted 2.3x faster than paid channels.</div>
+  </div>
+
+  <!-- Funnel -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">🔽</div>
+      <h2 class="section-title">Funnel Conversion</h2>
+    </div>
+    <div class="grid2" style="align-items:center;">
+      <div>
+        <div class="funnel">
+          <div class="funnel-col">
+            <div class="funnel-rate" style="opacity:0;">x</div>
+            <div class="funnel-bar" style="height:100%;background:linear-gradient(180deg,#2E74B5,#1C3557);"></div>
+            <div class="funnel-val">420</div>
+            <div class="funnel-lbl">MQLs</div>
+          </div>
+          <div class="funnel-col">
+            <div class="funnel-rate">→69%</div>
+            <div class="funnel-bar" style="height:69%;background:linear-gradient(180deg,#2E74B5,#1C3557);"></div>
+            <div class="funnel-val">290</div>
+            <div class="funnel-lbl">SALs</div>
+          </div>
+          <div class="funnel-col">
+            <div class="funnel-rate">→62%</div>
+            <div class="funnel-bar" style="height:43%;background:linear-gradient(180deg,#2E74B5,#1C3557);"></div>
+            <div class="funnel-val">180</div>
+            <div class="funnel-lbl">SQLs</div>
+          </div>
+          <div class="funnel-col">
+            <div class="funnel-rate">→52%</div>
+            <div class="funnel-bar" style="height:22%;background:linear-gradient(180deg,#2E74B5,#1C3557);"></div>
+            <div class="funnel-val">94</div>
+            <div class="funnel-lbl">Opps</div>
+          </div>
+          <div class="funnel-col">
+            <div class="funnel-rate">→15%</div>
+            <div class="funnel-bar" style="height:3%;background:linear-gradient(180deg,#16A34A,#166534);min-height:6px;"></div>
+            <div class="funnel-val">14</div>
+            <div class="funnel-lbl">Won</div>
+          </div>
+        </div>
+        <div class="bm-ref">B2B benchmarks: MQL→SAL 50–70% · SAL→SQL 50–70% · SQL→Opp 40–60% · Opp→Won 15–25%</div>
+        <div class="insight" style="margin-top:8px;"><span class="insight-arrow">→</span>SQL-to-Opp at 52% is at the low end of benchmark — biggest drop-off suggests sales needs stronger qualification criteria or earlier marketing involvement at the SQL stage.</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Conversion rates</div>
+        <div class="conv-row">
+          <div class="conv-flex"><span class="conv-label">MQL → SAL</span><span class="conv-val" style="color:#16A34A;">69%</span></div>
+          <div class="conv-track"><div class="conv-fill" style="width:69%;background:#16A34A;"></div></div>
+        </div>
+        <div class="conv-row">
+          <div class="conv-flex"><span class="conv-label">SAL → SQL</span><span class="conv-val" style="color:#16A34A;">62%</span></div>
+          <div class="conv-track"><div class="conv-fill" style="width:62%;background:#16A34A;"></div></div>
+        </div>
+        <div class="conv-row">
+          <div class="conv-flex"><span class="conv-label">SQL → Opp</span><span class="conv-val" style="color:#2E74B5;">52%</span></div>
+          <div class="conv-track"><div class="conv-fill" style="width:52%;background:#2E74B5;"></div></div>
+        </div>
+        <div class="conv-row">
+          <div class="conv-flex"><span class="conv-label">Opp → Won</span><span class="conv-val" style="color:#2E74B5;">15%</span></div>
+          <div class="conv-track"><div class="conv-fill" style="width:15%;background:#2E74B5;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Account Engagement -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">🎯</div>
+      <h2 class="section-title">Account Engagement</h2>
+    </div>
+    <div class="grid3" style="margin-bottom:14px;">
+      <div class="donut-wrap">
+        <svg width="80" height="80" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="34" fill="none" stroke="#EBF4FB" stroke-width="10"/>
+          <circle cx="50" cy="50" r="34" fill="none" stroke="#2E74B5" stroke-width="10" stroke-dasharray="153.5 213.6" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+          <text x="50" y="50" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="900" fill="#1C3557" font-family="Plus Jakarta Sans">72%</text>
+        </svg>
+        <div class="donut-title">Overall Engagement</div>
+        <span class="delta-up">↑14pts QoQ</span>
+        <div class="bm-above">Above benchmark · avg 50%</div>
+      </div>
+      <div class="donut-wrap">
+        <svg width="80" height="80" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="34" fill="none" stroke="#EBF4FB" stroke-width="10"/>
+          <circle cx="50" cy="50" r="34" fill="none" stroke="#16A34A" stroke-width="10" stroke-dasharray="178.7 213.6" stroke-linecap="round" transform="rotate(-90 50 50)"/>
+          <text x="50" y="50" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="900" fill="#1C3557" font-family="Plus Jakarta Sans">84%</text>
+        </svg>
+        <div class="donut-title">Tier 1 Engaged</div>
+        <div style="font-size:10px;color:#4A4A4A;">38 of 45 accounts</div>
+        <div style="font-size:10px;color:#2E74B5;font-weight:700;margin-top:3px;">Est. DSP: $10.8M</div>
+        <div style="font-size:9px;color:#888;">Direct Source Pipeline est.</div>
+      </div>
+      <div style="padding:14px;background:#EBF4FB;border-radius:12px;">
+        <div style="font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Top Accounts</div>
+        <div class="bar-row">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="font-size:11px;font-weight:600;">JPMorgan Chase</span><span style="font-size:10px;color:#2E74B5;font-weight:700;">$2.4M</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:94%;background:#2E74B5;"></div></div>
+          <div style="font-size:9px;color:#888;">94% engagement</div>
+        </div>
+        <div class="bar-row">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="font-size:11px;font-weight:600;">Kaiser Permanente</span><span style="font-size:10px;color:#2E74B5;font-weight:700;">$1.8M</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:87%;background:#2E74B5;"></div></div>
+          <div style="font-size:9px;color:#888;">87% engagement</div>
+        </div>
+        <div class="bar-row">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;"><span style="font-size:11px;font-weight:600;">General Motors</span><span style="font-size:10px;color:#2E74B5;font-weight:700;">$1.2M</span></div>
+          <div class="bar-track"><div class="bar-fill" style="width:81%;background:#2E74B5;"></div></div>
+          <div style="font-size:9px;color:#888;">81% engagement</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:10px 12px;background:#EBF4FB;border-radius:8px;border:1px solid #DCE9F5;font-size:12px;color:#1C3557;display:flex;gap:6px;">
+      <span style="font-weight:700;flex-shrink:0;">↔</span>Sales and marketing are tracking ahead of joint pipeline targets — the 38 Tier 1 engaged accounts represent $10.8M in estimated direct source pipeline for Q3 follow-through.
+    </div>
+  </div>
+
+  <!-- Intent Trends -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">📡</div>
+      <h2 class="section-title">Intent Trends & Share of Voice</h2>
+    </div>
+    <div class="grid2">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Intent score — 8 week trend</div>
+        <svg viewBox="0 0 280 70" style="width:100%;height:70px;">
+          <defs>
+            <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2E74B5" stop-opacity=".2"/>
+              <stop offset="100%" stop-color="#2E74B5" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <!-- Points: 42,48,51,58,63,71,68,74 scaled to 70px height, range 40-76 -->
+          <polygon points="8,57.8 48,46.7 88,41.1 128,22.2 168,10 208,0 248,8.9 272,0 272,62 8,62" fill="url(#sg)"/>
+          <polyline points="8,57.8 48,46.7 88,41.1 128,22.2 168,10 208,0 248,8.9 272,0" fill="none" stroke="#2E74B5" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+          <circle cx="8" cy="57.8" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="48" cy="46.7" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="88" cy="41.1" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="128" cy="22.2" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="168" cy="10" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="208" cy="0" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="248" cy="8.9" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="272" cy="0" r="3" fill="#2E74B5" stroke="#fff" stroke-width="1.5"/>
+        </svg>
+        <div class="intent-nums"><span>Wk 1: 42</span><span>Wk 8: 74</span></div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:8px;">
+          <span style="font-size:20px;font-weight:900;color:#1C3557;">74</span>
+          <span class="delta-up">↑76% QoQ</span>
+        </div>
+        <div class="insight" style="margin-top:8px;"><span class="insight-arrow">→</span>The 8-week intent climb from 42 to 74 represents the strongest sustained signal in four quarters — Q3 pipeline generation should exceed Q2 by 20-25% if the trend holds.</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;">Share of voice vs competitors</div>
+        <div class="sov-row">
+          <div class="sov-flex"><span style="font-size:12px;font-weight:700;color:#1C3557;">Your Brand</span><div style="display:flex;align-items:center;gap:4px;"><span style="font-size:12px;font-weight:700;color:#2E74B5;">34%</span><span class="delta-up">↑21% QoQ</span></div></div>
+          <div class="sov-track"><div class="sov-fill" style="width:34%;background:#2E74B5;"></div></div>
+        </div>
+        <div class="sov-row">
+          <div class="sov-flex"><span style="font-size:12px;color:#4A4A4A;">CrowdStrike</span><span style="font-size:12px;font-weight:700;color:#D97706;">41%</span></div>
+          <div class="sov-track"><div class="sov-fill" style="width:41%;background:#D97706;"></div></div>
+        </div>
+        <div class="sov-row">
+          <div class="sov-flex"><span style="font-size:12px;color:#4A4A4A;">Palo Alto Networks</span><span style="font-size:12px;font-weight:700;color:#888;">31%</span></div>
+          <div class="sov-track"><div class="sov-fill" style="width:31%;background:#888;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Channel Performance -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">📣</div>
+      <h2 class="section-title">Channel Performance</h2>
+    </div>
+    <div class="grid2" style="margin-bottom:12px;">
+      <div class="channel-box">
+        <div class="channel-title">🎪 RSA Conference 2025</div>
+        <div class="channel-flex channel-row"><span class="channel-key">Registrants</span><span class="channel-val">3,200</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Attendees</span><span class="channel-val">2,100</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Attendance rate</span><span class="channel-val">66%</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Demo Requests</span><span class="channel-val">380</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Demo Completions</span><span class="channel-val">264</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Demo → Opp Rate</span><span class="channel-val">42%</span></div>
+      </div>
+      <div class="channel-box">
+        <div class="channel-title">📧 Email</div>
+        <div class="channel-flex channel-row"><span class="channel-key">Open Rate</span><span class="channel-val">31%</span></div>
+        <div class="bm-above" style="margin-bottom:6px;">Above benchmark · avg 25%</div>
+        <div class="channel-flex channel-row"><span class="channel-key">Click Rate</span><span class="channel-val">6.8%</span></div>
+        <div class="bm-above" style="margin-bottom:6px;">Above benchmark · avg 3%</div>
+        <div class="channel-flex channel-row"><span class="channel-key">Sent</span><span class="channel-val">18,500</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Replies</span><span class="channel-val">210</span></div>
+      </div>
+      <div class="channel-box">
+        <div class="channel-title">💼 LinkedIn Ads</div>
+        <div class="channel-flex channel-row"><span class="channel-key">CTR</span><span class="channel-val">1.4%</span></div>
+        <div class="bm-above" style="margin-bottom:6px;">Above benchmark · avg 0.5%</div>
+        <div class="channel-flex channel-row"><span class="channel-key">Engaged Accounts</span><span class="channel-val">280</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Impressions</span><span class="channel-val">310,000</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Cost Per Lead</span><span class="channel-val">$210</span></div>
+        <div class="bm-below" style="margin-bottom:0;">Below benchmark · avg $130</div>
+      </div>
+      <div class="channel-box">
+        <div class="channel-title">🔍 Google Ads</div>
+        <div class="channel-flex channel-row"><span class="channel-key">CTR</span><span class="channel-val">3.8%</span></div>
+        <div class="bm-above" style="margin-bottom:6px;">Above benchmark · avg 2%</div>
+        <div class="channel-flex channel-row"><span class="channel-key">Conversions</span><span class="channel-val">640</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">Impressions</span><span class="channel-val">195,000</span></div>
+        <div class="channel-flex channel-row"><span class="channel-key">CPC</span><span class="channel-val">$4.20</span></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="best-box">
+        <div class="best-label">Best Channel</div>
+        <div class="best-text">Events — RSA Conference drove 3,200 registrants at 66% attendance and $6.2M in direct pipeline, outperforming all digital channels combined.</div>
+      </div>
+      <div class="attn-box">
+        <div class="attn-label">Needs Attention</div>
+        <div class="attn-text">LinkedIn Ads — $210 CPL is 62% above benchmark. Recommend cutting spend by 20% and reallocating to event follow-up sequences where conversion rates are 2.3x higher.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Performance -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">📄</div>
+      <h2 class="section-title">Content Performance</h2>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Pipeline influenced by asset</div>
+      <div class="bar-row">
+        <div class="bar-labels"><span class="bar-label-text">Zero Trust Executive Guide</span><span class="bar-label-val">$8.2M</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#2E74B5;"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-labels"><span class="bar-label-text">Cloud Security ROI Calculator</span><span class="bar-label-val">$6.1M</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:74%;background:#2E74B5;"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-labels"><span class="bar-label-text">Threat Assessment Webinar</span><span class="bar-label-val">$4.8M</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:59%;background:#2E74B5;"></div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Downloads by asset</div>
+      <div class="bar-row">
+        <div class="bar-labels"><span class="bar-label-text">Threat Assessment Webinar</span><span style="font-weight:700;color:#1C3557;">890</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:#1C3557;"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-labels"><span class="bar-label-text">Zero Trust Executive Guide</span><span style="font-weight:700;color:#1C3557;">640</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:72%;background:#1C3557;"></div></div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-labels"><span class="bar-label-text">Cloud Security ROI Calculator</span><span style="font-weight:700;color:#1C3557;">410</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:46%;background:#1C3557;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Wins + Fixes -->
+  <div class="card">
+    <div class="section-head">
+      <div class="section-icon">🏆</div>
+      <h2 class="section-title">What Worked & What to Fix</h2>
+    </div>
+    <div class="grid2">
+      <div>
+        <div style="font-size:11px;font-weight:800;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Top Wins</div>
+        <div class="win"><span class="win-check">✓</span><div class="win-text">24.7x pipeline ROI on $750K budget — every marketing dollar returned $24.70 in direct pipeline, exceeding Q2 target by 31%.</div></div>
+        <div class="win"><span class="win-check">✓</span><div class="win-text">Tier 1 account engagement reached 84% (38 of 45) — up from 61% last quarter, representing $10.8M in estimated DSP.</div></div>
+        <div class="win"><span class="win-check">✓</span><div class="win-text">Intent scores rose 76% over 8 weeks — the strongest sustained intent growth signal in four quarters.</div></div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:800;color:#92400E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;">Areas to Improve</div>
+        <div class="fix"><span class="fix-arrow">▲</span><div class="fix-text">LinkedIn CPL at $210 is 62% above benchmark — reallocate 20% of LinkedIn budget to Google Ads and event follow-up email where conversion rates are 2.3x higher.</div></div>
+        <div class="fix"><span class="fix-arrow">▲</span><div class="fix-text">SQL-to-Opportunity conversion at 52% is at the low end of benchmark — tighten SQL qualification criteria and add marketing touchpoints earlier in the SQL stage.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget + Next Quarter -->
+  <div class="grid2">
+    <div class="card">
+      <div class="section-head">
+        <div class="section-icon">💸</div>
+        <h2 class="section-title">Budget & ROI</h2>
+      </div>
+      <div style="padding:8px 12px;background:#EBF4FB;border-radius:8px;font-size:12px;color:#4A4A4A;margin-bottom:12px;display:flex;gap:6px;"><span style="color:#2E74B5;font-weight:700;flex-shrink:0;">→</span>24.7x pipeline ROI is exceptional — maintain event budget at current levels, increase Google Ads by 15%, and cut LinkedIn by 20% to improve CPL efficiency heading into Q3.</div>
+      <div class="grid2">
+        <div class="roi-box"><div class="roi-label">Pipeline ROI</div><div class="roi-value">24.7x</div></div>
+        <div class="roi-box"><div class="roi-label">Influenced ROI</div><div class="roi-value">89.3x</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="section-head">
+        <div class="section-icon">🚀</div>
+        <h2 class="section-title">Next Quarter Priorities</h2>
+      </div>
+      <div class="next-item"><div class="next-num">1</div><div class="next-text">Double event investment — RSA showed 3x better pipeline conversion than paid digital. Allocate 40% of Q3 budget to NVIDIA GTC Security Track and Black Hat.</div></div>
+      <div class="next-item"><div class="next-num">2</div><div class="next-text">Launch 60-day high-touch nurture for 38 engaged Tier 1 accounts — dedicated SDR outreach tied to the sustained intent spike before it cools.</div></div>
+      <div class="next-item"><div class="next-num">3</div><div class="next-text">Rebuild LinkedIn targeting to exclude companies under 5,000 employees — current targeting is too broad, inflating CPL and diluting engaged account quality.</div></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-left">
+      <div class="footer-icon">📊</div>
+      <div>
+        <div class="footer-tool">Campaign Performance Report Generator</div>
+        <div class="footer-sub">v2.0 · Companion to AMPA · Built with Claude API + React</div>
+      </div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-name">Built by Megan Cleary</div>
+      <a href="https://linkedin.com/in/megcleary" class="header-link" target="_blank">linkedin.com/in/megcleary</a>
+      <div class="footer-copy">© 2026 Megan Cleary. All rights reserved. Unauthorized reproduction prohibited.</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
