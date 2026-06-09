@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AMPA — Account Marketing Planning Agent | Megan Cleary</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#F7FAFD;color:#1C1C1C;min-height:100vh;}
+a{color:#2E74B5;text-decoration:none;}
+
+/* Header */
+.hdr{background:#fff;border-bottom:1px solid #D0DCE8;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
+.hdr-logo{display:flex;align-items:center;gap:12px;}
+.hdr-icon{width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.hdr-title{font-weight:900;font-size:15px;letter-spacing:-.025em;}
+.hdr-sub{font-size:12px;color:#888;}
+.hdr-right{display:flex;align-items:center;gap:16px;}
+.hdr-name{font-size:12px;font-weight:700;}
+.hdr-link{font-size:11px;color:#2E74B5;font-weight:600;}
+.badge{font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#2E74B5;background:#EBF4FB;padding:5px 10px;border-radius:6px;}
+
+/* Cards & layout */
+.wrap{max-width:880px;margin:0 auto;padding:32px 24px 80px;}
+.demo-banner{background:linear-gradient(135deg,#1C3557,#2E74B5);color:#fff;border-radius:10px;padding:10px 18px;display:flex;align-items:center;gap:10px;margin-bottom:24px;font-size:12px;font-weight:700;}
+.demo-banner a{color:#DCE9F5;text-decoration:underline;}
+.card{background:#fff;border-radius:16px;border:1px solid #D0DCE8;padding:28px;margin-bottom:20px;box-shadow:0 1px 4px rgba(15,23,42,.05);}
+.card-dark{background:linear-gradient(135deg,#1C3557,#0F2540);border:none;box-shadow:0 4px 24px rgba(99,102,241,.2);}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
+.sec-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sec-icon-light{width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sec-title{font-size:16px;font-weight:800;letter-spacing:-.02em;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.muted{background:#EBF4FB;border-radius:10px;padding:14px;}
+.qlabel{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:4px;}
+.qval{font-size:13px;color:#4A4A4A;line-height:1.65;}
+.qval-strong{font-size:13px;color:#1C1C1C;font-weight:600;line-height:1.55;}
+
+/* Scores */
+.score-wrap{margin-bottom:14px;}
+.score-flex{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.score-name{font-size:13px;color:#4A4A4A;font-weight:500;}
+.score-val{font-size:13px;font-weight:800;}
+.score-track{height:5px;background:#EBF4FB;border-radius:99px;overflow:hidden;}
+.score-fill{height:100%;border-radius:99px;}
+.tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}
+
+/* Tier badge */
+.tier{display:inline-flex;align-items:center;gap:10px;padding:8px 18px;border-radius:12px;background:#DCFCE7;border:2px solid #BBF7D0;}
+.tier-letter{font-size:24px;font-weight:900;color:#166534;line-height:1;}
+.tier-sub{font-size:10px;font-weight:700;color:#166534;letter-spacing:.06em;text-transform:uppercase;}
+.tier-label{font-size:12px;font-weight:700;color:#166534;}
+
+/* Signals */
+.signal{display:flex;align-items:flex-start;justify-content:space-between;padding:14px 16px;background:#EBF4FB;border-radius:10px;gap:16px;margin-bottom:10px;}
+.sig-type{font-size:11px;font-weight:700;color:#2E74B5;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
+.sig-detail{font-size:13px;color:#4A4A4A;line-height:1.5;}
+
+/* Personas */
+.persona{padding:18px;background:#EBF4FB;border-radius:12px;margin-bottom:12px;}
+.p-avatar{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:900;flex-shrink:0;}
+
+/* Channels */
+.ch-dot{width:5px;height:5px;border-radius:50%;display:inline-block;flex-shrink:0;margin-top:5px;}
+.pill{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600;background:#EBF4FB;color:#2E74B5;border:1px solid #DCE9F5;margin:3px;}
+
+/* Outreach */
+.touch-num{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:900;flex-shrink:0;}
+.email-box{background:#EBF4FB;border-radius:10px;padding:14px;}
+.mono{font-size:12px;font-weight:700;font-family:monospace;color:#1C1C1C;margin-bottom:8px;}
+.body-text{font-size:13px;color:#4A4A4A;line-height:1.7;white-space:pre-line;}
+
+/* Slack dark */
+.slack-dark{background:#1A1D27;border-radius:12px;padding:20px;border:1px solid #2D3148;}
+.slack-bot{font-size:14px;font-weight:800;color:#E0E7FF;margin-bottom:8px;}
+.slack-text{font-size:13px;color:#94A3B8;line-height:1.7;white-space:pre-line;}
+
+/* LinkedIn ad char counter */
+.ad-field{margin-bottom:12px;}
+.ad-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
+.ad-label{font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;}
+.ad-counter{font-size:11px;font-weight:800;}
+.ad-textarea{width:100%;padding:8px 10px;border-radius:8px;border:1.5px solid #D0DCE8;font-size:13px;font-family:inherit;color:#1C1C1C;resize:vertical;box-sizing:border-box;line-height:1.55;background:#fff;outline:none;}
+
+/* Workflow */
+.wf-btn{width:100%;background:none;border:none;cursor:pointer;font-family:inherit;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left;}
+.wf-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.wf-step-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#fff;flex-shrink:0;margin-top:1px;}
+.wf-connector{width:2px;height:16px;margin-left:10px;margin-bottom:2px;background:#D0DCE8;}
+
+/* Score methodology */
+.meth-header{padding:14px 16px;background:#EBF4FB;border-bottom:1px solid #DCE9F5;}
+.meth-row{padding:14px 16px;border-bottom:1px solid #D0DCE8;background:#fff;}
+.meth-row:last-child{border-bottom:none;}
+
+/* How I built this */
+.built-tag{font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;background:#fff;border:1.5px solid #DCE9F5;color:#2E74B5;letter-spacing:.04em;display:inline-block;margin:3px;}
+
+/* Footer */
+.footer{margin-top:40px;padding-top:24px;border-top:1px solid #D0DCE8;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.footer-icon{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;font-size:14px;}
+
+details > summary{cursor:pointer;list-style:none;}
+details > summary::-webkit-details-marker{display:none;}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-logo">
+    <div class="hdr-icon">⚡</div>
+    <div>
+      <div class="hdr-title">Account Marketing Planning Agent</div>
+      <div class="hdr-sub">AI-powered B2B account intelligence & campaign activation</div>
+    </div>
+  </div>
+  <div class="hdr-right">
+    <div style="text-align:right;">
+      <div class="hdr-name">Megan Cleary</div>
+      <a href="https://linkedin.com/in/megcleary" target="_blank" class="hdr-link">linkedin.com/in/megcleary</a>
+    </div>
+    <div class="badge">AMPA v2.0 · Demo</div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="demo-banner">
+    <span>📊</span>
+    <span>Demo Mode — Pre-generated brief for <strong>JPMorgan Chase</strong> · AI-Powered Cybersecurity Platform · Open live tool to generate any account instantly</span>
+  </div>
+
+  <!-- Account header -->
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+    <div>
+      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:4px;">Account Brief</div>
+      <div style="font-size:26px;font-weight:900;letter-spacing:-.03em;">JPMorgan Chase</div>
+      <div style="font-size:13px;color:#4A4A4A;margin-top:2px;">Financial Services / Enterprise AI · Public</div>
+    </div>
+    <div class="tier">
+      <div class="tier-letter">A</div>
+      <div><div class="tier-sub">Tier</div><div class="tier-label">High Priority</div></div>
+    </div>
+  </div>
+
+  <!-- Scores -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">📊</div><h2 class="sec-title">Account Prioritization Scores</h2></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 48px;">
+      <div class="score-wrap"><div class="score-flex"><span class="score-name">ICP Fit</span><span class="score-val" style="color:#22C55E;">9.2/10</span></div><div class="score-track"><div class="score-fill" style="width:92%;background:#22C55E;"></div></div></div>
+      <div class="score-wrap"><div class="score-flex"><span class="score-name">Intent Signals</span><span class="score-val" style="color:#22C55E;">8.7/10</span></div><div class="score-track"><div class="score-fill" style="width:87%;background:#22C55E;"></div></div></div>
+      <div class="score-wrap"><div class="score-flex"><span class="score-name">Expansion Potential</span><span class="score-val" style="color:#22C55E;">8.8/10</span></div><div class="score-track"><div class="score-fill" style="width:88%;background:#22C55E;"></div></div></div>
+      <div class="score-wrap"><div class="score-flex"><span class="score-name">Strategic Value</span><span class="score-val" style="color:#22C55E;">9.5/10</span></div><div class="score-track"><div class="score-fill" style="width:95%;background:#22C55E;"></div></div></div>
+      <div class="score-wrap"><div class="score-flex"><span class="score-name">Pipeline Potential</span><span class="score-val" style="color:#22C55E;">9.1/10</span></div><div class="score-track"><div class="score-fill" style="width:91%;background:#22C55E;"></div></div></div>
+    </div>
+    <div style="margin-top:16px;padding:14px 16px;background:#EBF4FB;border-radius:10px;font-size:13px;color:#4A4A4A;line-height:1.65;">JPMorgan's $1.5B+ AI investment, active CISO mandate for AI-powered threat detection, and 400+ open security engineering roles make this an immediate Tier A opportunity. The window to get on the evaluation shortlist is open right now.</div>
+
+    <!-- Score methodology -->
+    <div style="margin-top:14px;">
+      <details>
+        <summary style="display:flex;align-items:center;gap:6px;color:#2E74B5;font-size:12px;font-weight:700;padding:4px 0;">
+          <span>▼</span> How are these scores calculated?
+        </summary>
+        <div style="margin-top:14px;border-radius:12px;border:1.5px solid #DCE9F5;overflow:hidden;">
+          <div class="meth-header">
+            <div style="font-size:12px;font-weight:800;color:#1C3557;margin-bottom:4px;">Score Methodology</div>
+            <div style="font-size:12px;color:#4A4A4A;line-height:1.5;"><strong style="color:#991B1B;">Currently:</strong> AI estimates from public signals. <strong style="color:#166534;">With integrations:</strong> replaced by live data from your stack.</div>
+          </div>
+          <div class="meth-row"><div style="font-size:12px;font-weight:800;color:#1C1C1C;margin-bottom:8px;">ICP Fit</div><div class="grid2"><div style="padding:10px 12px;background:#FEF9C3;border-radius:8px;border:1px solid #FDE68A;"><div style="font-size:10px;font-weight:700;color:#854D0E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">⚡ AI Estimate (now)</div><div style="font-size:12px;color:#78350F;line-height:1.5;">Company size, industry, growth stage, tech stack signals from public sources</div></div><div style="padding:10px 12px;background:#DCFCE7;border-radius:8px;border:1px solid #BBF7D0;"><div style="font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">🔗 With integrations</div><div style="font-size:12px;color:#14532D;line-height:1.5;">Your defined ICP profile connected via Salesforce or HubSpot — firmographic criteria, revenue range, vertical</div></div></div></div>
+          <div class="meth-row"><div style="font-size:12px;font-weight:800;color:#1C1C1C;margin-bottom:8px;">Intent Signals</div><div class="grid2"><div style="padding:10px 12px;background:#FEF9C3;border-radius:8px;border:1px solid #FDE68A;"><div style="font-size:10px;font-weight:700;color:#854D0E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">⚡ AI Estimate (now)</div><div style="font-size:12px;color:#78350F;line-height:1.5;">AI inference from job postings, acquisitions, exec changes, press releases, product launches</div></div><div style="padding:10px 12px;background:#DCFCE7;border-radius:8px;border:1px solid #BBF7D0;"><div style="font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">🔗 With integrations</div><div style="font-size:12px;color:#14532D;line-height:1.5;">Live Demandbase or Bombora intent scores — keyword surge data, topic engagement, anonymous site visitor signals</div></div></div></div>
+          <div class="meth-row"><div style="font-size:12px;font-weight:800;color:#1C1C1C;margin-bottom:8px;">Pipeline Potential</div><div class="grid2"><div style="padding:10px 12px;background:#FEF9C3;border-radius:8px;border:1px solid #FDE68A;"><div style="font-size:10px;font-weight:700;color:#854D0E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">⚡ AI Estimate (now)</div><div style="font-size:12px;color:#78350F;line-height:1.5;">AI estimate based on company revenue, deal complexity, divisions and geographies</div></div><div style="padding:10px 12px;background:#DCFCE7;border-radius:8px;border:1px solid #BBF7D0;"><div style="font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">🔗 With integrations</div><div style="font-size:12px;color:#14532D;line-height:1.5;">Salesforce historical win rates, average deal size, sales cycle data for this account segment</div></div></div></div>
+          <div class="meth-row"><div style="font-size:12px;font-weight:800;color:#1C1C1C;margin-bottom:8px;">Strategic Value</div><div class="grid2"><div style="padding:10px 12px;background:#FEF9C3;border-radius:8px;border:1px solid #FDE68A;"><div style="font-size:10px;font-weight:700;color:#854D0E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">⚡ AI Estimate (now)</div><div style="font-size:12px;color:#78350F;line-height:1.5;">AI assessment of logo value, analyst coverage, market influence, and reference potential</div></div><div style="padding:10px 12px;background:#DCFCE7;border-radius:8px;border:1px solid #BBF7D0;"><div style="font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">🔗 With integrations</div><div style="font-size:12px;color:#14532D;line-height:1.5;">Internal account tiering from Demandbase or 6sense, analyst relationship data, partner ecosystem value from Salesforce</div></div></div></div>
+          <div class="meth-row" style="border-bottom:none;"><div style="font-size:12px;font-weight:800;color:#1C1C1C;margin-bottom:8px;">Expansion Potential</div><div class="grid2"><div style="padding:10px 12px;background:#FEF9C3;border-radius:8px;border:1px solid #FDE68A;"><div style="font-size:10px;font-weight:700;color:#854D0E;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">⚡ AI Estimate (now)</div><div style="font-size:12px;color:#78350F;line-height:1.5;">AI estimate based on business units, product lines, geographies, and growth trajectory</div></div><div style="padding:10px 12px;background:#DCFCE7;border-radius:8px;border:1px solid #BBF7D0;"><div style="font-size:10px;font-weight:700;color:#166534;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">🔗 With integrations</div><div style="font-size:12px;color:#14532D;line-height:1.5;">Product usage data showing feature adoption; Salesforce opportunity history showing whitespace; renewal dates</div></div></div></div>
+          <div style="padding:14px 16px;background:#EBF4FB;">
+            <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Data sources that make scores precise</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">ICP Profile</span>
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">Demandbase</span>
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">Bombora</span>
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">Salesforce</span>
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">6sense</span>
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">LTV Data</span>
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">Product Usage</span>
+              <span style="padding:6px 12px;background:#fff;border-radius:20px;border:1.5px solid #DCE9F5;font-size:12px;font-weight:700;color:#2E74B5;">Renewal Dates</span>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">🎯</div><h2 class="sec-title">Executive Summary</h2></div>
+    <div class="grid2">
+      <div class="muted"><div class="qlabel">Why This Account</div><div class="qval">$1.5B+ AI investment and 200+ models in production create new attack surfaces legacy security tools can't protect — CISO mandate for AI-powered threat detection makes this evaluation window immediate.</div></div>
+      <div class="muted"><div class="qlabel">GTM Motion</div><div class="qval-strong">Executive ABM — White Glove 1:1</div></div>
+      <div class="muted"><div class="qlabel">Marketing Angle</div><div class="qval">AI-powered zero trust at financial services scale — position as the only platform built natively for AI-era threats, not retrofitted legacy tools.</div></div>
+      <div class="muted"><div class="qlabel">Sales Angle</div><div class="qval">Platform consolidation opportunity — JPMorgan is rationalizing its security vendor stack and needs a native AI threat detection layer their current tools don't provide.</div></div>
+    </div>
+  </div>
+
+  <!-- Company Profile -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">🏢</div><h2 class="sec-title">Company Profile</h2></div>
+    <div class="grid3" style="margin-bottom:16px;">
+      <div class="muted"><div class="qlabel">Industry</div><div class="qval-strong">Financial Services / Enterprise AI</div></div>
+      <div class="muted"><div class="qlabel">Revenue (est.)</div><div class="qval-strong">~$158B (FY2024)</div></div>
+      <div class="muted"><div class="qlabel">Employees (est.)</div><div class="qval-strong">~310,000</div></div>
+      <div class="muted"><div class="qlabel">Status</div><div class="qval-strong">Public — NYSE: JPM</div></div>
+      <div class="muted"><div class="qlabel">Geography</div><div class="qval-strong">Global — HQ New York</div></div>
+      <div class="muted"><div class="qlabel">AI Investment</div><div class="qval-strong">$1.5B+ annually</div></div>
+    </div>
+    <p style="margin:0 0 16px;font-size:14px;color:#4A4A4A;line-height:1.7;">JPMorgan Chase is the largest U.S. bank by assets ($3.9T) and one of the most aggressive AI adopters in financial services, with 200+ AI models in production and a stated commitment to AI-powered operations across trading, risk, fraud detection, and customer experience.</p>
+    <div style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;">Recent Initiatives</div>
+    <div style="display:flex;gap:8px;font-size:13px;color:#4A4A4A;padding:3px 0;"><span style="color:#2E74B5;font-weight:700;flex-shrink:0;">→</span>LLM Suite deployed to 60,000+ employees for AI-powered productivity and coding assistance</div>
+    <div style="display:flex;gap:8px;font-size:13px;color:#4A4A4A;padding:3px 0;"><span style="color:#2E74B5;font-weight:700;flex-shrink:0;">→</span>AI-powered fraud detection processing 10B+ transactions daily — requires AI-native security monitoring</div>
+    <div style="display:flex;gap:8px;font-size:13px;color:#4A4A4A;padding:3px 0;"><span style="color:#2E74B5;font-weight:700;flex-shrink:0;">→</span>Opened AI Research Center in NYC with 1,000+ ML engineers building proprietary financial AI models</div>
+    <div style="display:flex;gap:8px;font-size:13px;color:#4A4A4A;padding:3px 0;"><span style="color:#2E74B5;font-weight:700;flex-shrink:0;">→</span>$12B total technology investment in 2024 — AI security infrastructure top priority</div>
+  </div>
+
+  <!-- Technology Environment -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">💻</div><h2 class="sec-title">Technology Environment</h2></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:10px 14px;background:#EBF4FB;border-radius:8px;">
+      <span>ℹ️</span>
+      <span style="font-size:12px;color:#4A4A4A;"><strong style="color:#1C1C1C;">Confidence levels</strong> reflect signal strength from public sources — job postings, integrations, press releases. <strong style="color:#166534;">High</strong> = confirmed. <strong style="color:#854D0E;">Medium</strong> = likely. <strong style="color:#991B1B;">Low</strong> = estimated.</span>
+    </div>
+    <div class="grid2">
+      <div class="muted">
+        <div class="qlabel" style="margin-bottom:10px;">Cloud Providers</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;">AWS</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;">Azure</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;font-weight:500;">Google Cloud</span><span class="tag" style="background:#FEF9C3;color:#854D0E;">Medium</span></div>
+      </div>
+      <div class="muted">
+        <div class="qlabel" style="margin-bottom:10px;">Security Vendors</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;">Palo Alto Networks</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;">CrowdStrike</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;font-weight:500;">Splunk</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+      </div>
+      <div class="muted">
+        <div class="qlabel" style="margin-bottom:10px;">Identity Vendors</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;">CyberArk</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;font-weight:500;">Okta</span><span class="tag" style="background:#FEF9C3;color:#854D0E;">Medium</span></div>
+      </div>
+      <div class="muted">
+        <div class="qlabel" style="margin-bottom:10px;">CRM</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;">Salesforce</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+        <div class="qlabel" style="margin-top:10px;margin-bottom:6px;">Marketing Automation</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;font-weight:500;">Marketo</span><span class="tag" style="background:#FEF9C3;color:#854D0E;">Medium</span></div>
+      </div>
+      <div class="muted">
+        <div class="qlabel" style="margin-bottom:10px;">Data & Analytics</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;"><span style="font-size:13px;font-weight:500;">Snowflake</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;font-weight:500;">Databricks</span><span class="tag" style="background:#DCFCE7;color:#166534;">High</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buying Signals -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">📡</div><h2 class="sec-title">Buying Signals</h2></div>
+    <div class="signal"><div style="flex:1;"><div class="sig-type">AI Security Mandate</div><div class="sig-detail">New CISO directive for AI-powered threat detection across all business units by Q4 — active vendor evaluation underway with budget already allocated.</div></div><span class="tag" style="background:#DCFCE7;color:#166534;">Strong</span></div>
+    <div class="signal"><div style="flex:1;"><div class="sig-type">AI Investment at Scale</div><div class="sig-detail">$1.5B+ annual AI commitment creates new attack surfaces legacy security tools cannot cover — immediate need for AI-native security platform.</div></div><span class="tag" style="background:#DCFCE7;color:#166534;">Strong</span></div>
+    <div class="signal"><div style="flex:1;"><div class="sig-type">Hiring Trends</div><div class="sig-detail">400+ open security engineering roles including AI Security Architect and Zero Trust Engineer — headcount investment confirms active security program expansion.</div></div><span class="tag" style="background:#DCFCE7;color:#166534;">Strong</span></div>
+    <div class="signal"><div style="flex:1;"><div class="sig-type">Regulatory Pressure</div><div class="sig-detail">Federal regulators requiring JPMorgan to validate AI model risk and demonstrate AI-specific threat monitoring — creates compliance-driven urgency.</div></div><span class="tag" style="background:#FEF9C3;color:#854D0E;">Medium</span></div>
+    <div class="signal"><div style="flex:1;"><div class="sig-type">Zero Trust Initiative</div><div class="sig-detail">Public commitment to enterprise-wide zero trust architecture rollout — active vendor evaluations for identity, endpoint, and network security layers.</div></div><span class="tag" style="background:#FEF9C3;color:#854D0E;">Medium</span></div>
+  </div>
+
+  <!-- Personas -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">👥</div><h2 class="sec-title">Persona Analysis</h2></div>
+    <div class="persona">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><div class="p-avatar">CI</div><div style="font-weight:800;font-size:14px;">Chief Information Security Officer</div></div>
+      <div class="grid2">
+        <div><div class="qlabel" style="margin-bottom:5px;">Goals</div><div class="qval">Deploy AI-powered threat detection enterprise-wide. Reduce dwell time from weeks to hours. Demonstrate security program maturity to the board and regulators.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Pain Points</div><div class="qval">200+ AI models creating new attack surfaces legacy tools can't see. Regulatory pressure to prove AI risk management. Vendor sprawl across 40+ security tools.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Messaging Angle</div><div class="qval">Position as the only platform built natively for AI-era threats — not retrofitted. Lead with the specific attack surface gap their current stack leaves exposed.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Best Content Offer</div><div class="qval">"AI-Native Zero Trust for Financial Services" — CISO advisory brief with peer benchmarking data from top-10 global banks</div></div>
+      </div>
+    </div>
+    <div class="persona">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><div class="p-avatar">VP</div><div style="font-weight:800;font-size:14px;">VP Security Engineering</div></div>
+      <div class="grid2">
+        <div><div class="qlabel" style="margin-bottom:5px;">Goals</div><div class="qval">Build scalable AI threat detection infrastructure. Reduce SOC analyst alert fatigue. Integrate security tooling natively with Snowflake and Databricks AI platform.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Pain Points</div><div class="qval">Tool sprawl creates integration complexity across 40+ vendors. SOC analysts overwhelmed by false positives. Difficulty correlating signals across AI and traditional infrastructure.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Messaging Angle</div><div class="qval">Operational efficiency and native integration — platform reduces analyst workload, consolidates signal correlation, and integrates with the AI data stack already in place.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Best Content Offer</div><div class="qval">Technical deep dive: "AI Threat Detection Architecture for Enterprise Data Environments — Snowflake & Databricks Integration Guide"</div></div>
+      </div>
+    </div>
+    <div class="persona">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;"><div class="p-avatar">DI</div><div style="font-weight:800;font-size:14px;">Director of Zero Trust Architecture</div></div>
+      <div class="grid2">
+        <div><div class="qlabel" style="margin-bottom:5px;">Goals</div><div class="qval">Implement zero trust across 310,000 employees and 200+ AI workloads. Build identity-aware security perimeter. Show measurable risk reduction to the CISO within 90 days.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Pain Points</div><div class="qval">Existing zero trust tools not designed for AI workload identity. Complexity of extending zero trust to ML model access controls and inference endpoint security.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Messaging Angle</div><div class="qval">Platform consolidation — the only solution that applies zero trust principles natively to AI workloads, not just traditional user identity and endpoint security.</div></div>
+        <div><div class="qlabel" style="margin-bottom:5px;">Best Content Offer</div><div class="qval">Architecture guide: "Extending Zero Trust to AI Workloads — Identity, Access, and Inference Security at Financial Services Scale"</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Campaign Recommendation -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">🚀</div><h2 class="sec-title">Campaign Recommendation</h2></div>
+    <div style="display:inline-flex;align-items:center;gap:8px;background:#EBF4FB;padding:8px 14px;border-radius:8px;margin-bottom:16px;border:1px solid #DCE9F5;"><span style="font-size:11px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.06em;">Primary Motion</span><span style="font-size:14px;font-weight:800;color:#1C3557;">Executive ABM — White Glove 1:1</span></div>
+    <p style="margin:0 0 20px;font-size:14px;color:#4A4A4A;line-height:1.7;">JPMorgan's active CISO-led evaluation, regulatory urgency, and $1.5B+ AI investment create a high-value, time-sensitive window. This account requires white-glove executive engagement — not broad demand gen. Get in front of the shortlist before it closes this quarter.</p>
+    <div class="grid2" style="margin-bottom:14px;">
+      <div class="muted"><div style="font-size:11px;font-weight:700;margin-bottom:10px;">🟢 Tier 1 Channels</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#22C55E;"></div>Executive direct mail</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#22C55E;"></div>1:1 CISO briefing</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#22C55E;"></div>LinkedIn executive engagement</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#22C55E;"></div>CISO peer roundtable</div></div>
+      <div class="muted"><div style="font-size:11px;font-weight:700;margin-bottom:10px;">🟡 Tier 2 Channels</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#F59E0B;"></div>ABM nurture email</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#F59E0B;"></div>Intent-triggered paid search</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#F59E0B;"></div>RSA Conference presence</div></div>
+      <div class="muted"><div style="font-size:11px;font-weight:700;margin-bottom:10px;">🔴 Avoid</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#EF4444;"></div>Broad display advertising</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#EF4444;"></div>Mass email campaigns</div></div>
+      <div class="muted"><div style="font-size:11px;font-weight:700;margin-bottom:10px;">📈 KPIs</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#2E74B5;"></div>CISO meeting secured</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#2E74B5;"></div>Evaluation shortlist entry</div><div style="display:flex;align-items:center;gap:6px;font-size:13px;color:#4A4A4A;padding:3px 0;"><div class="ch-dot" style="background:#2E74B5;"></div>Proof of concept initiated</div></div>
+    </div>
+    <div class="grid3">
+      <div style="padding:14px;background:#EBF4FB;border-radius:10px;border:1px solid #DCE9F5;"><div style="font-size:10px;font-weight:700;color:#2E74B5;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Campaign Theme</div><div style="font-size:13px;font-weight:600;color:#1C3557;">AI-Powered Zero Trust at JPMorgan Scale</div></div>
+      <div style="padding:14px;background:#EBF4FB;border-radius:10px;border:1px solid #DCE9F5;"><div style="font-size:10px;font-weight:700;color:#2E74B5;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Content Asset</div><div style="font-size:13px;font-weight:600;color:#1C3557;">CISO Advisory Brief — "AI-Native Zero Trust for Financial Services" (co-branded Forrester)</div></div>
+      <div style="padding:14px;background:#EBF4FB;border-radius:10px;border:1px solid #DCE9F5;"><div style="font-size:10px;font-weight:700;color:#2E74B5;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Suggested CTA</div><div style="font-size:13px;font-weight:600;color:#1C3557;">Request a private CISO briefing with our security advisory team</div></div>
+    </div>
+  </div>
+
+  <!-- Sales Activation -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">💼</div><h2 class="sec-title">Sales Activation</h2></div>
+    <div style="padding:16px;background:#EBF4FB;border-radius:10px;margin-bottom:14px;"><div class="qlabel" style="margin-bottom:8px;">SDR Outreach Angle</div><div style="font-size:14px;color:#4A4A4A;line-height:1.7;">Lead with the CISO mandate and the AI attack surface gap — not product features. Open with the insight that 200+ AI models in production create threat vectors their current stack can't see. Position the briefing as a risk conversation, not a sales call. Target CISO or VP Security Engineering — not IT procurement.</div></div>
+    <div class="grid2">
+      <div style="padding:16px;background:#EBF4FB;border-radius:10px;"><div class="qlabel" style="margin-bottom:8px;">Executive Email Theme</div><div style="font-size:13px;font-weight:600;color:#1C1C1C;">The attack surface your AI investment just created</div></div>
+      <div style="padding:16px;background:#EBF4FB;border-radius:10px;"><div class="qlabel" style="margin-bottom:8px;">Follow-up Asset</div><div style="font-size:13px;font-weight:600;color:#1C1C1C;">AI Security Readiness Assessment — benchmarks JPMorgan's AI threat detection posture against peer financial institutions</div></div>
+      <div style="padding:16px;background:#EBF4FB;border-radius:10px;"><div class="qlabel" style="margin-bottom:10px;">Discovery Questions</div><div style="display:flex;gap:8px;font-size:13px;color:#4A4A4A;padding:4px 0;"><span style="color:#2E74B5;font-weight:800;flex-shrink:0;">1.</span>With 200+ AI models in production, how are you monitoring threat activity across inference endpoints and model access today?</div><div style="display:flex;gap:8px;font-size:13px;color:#4A4A4A;padding:4px 0;"><span style="color:#2E74B5;font-weight:800;flex-shrink:0;">2.</span>How is your zero trust architecture being extended to cover AI workload identity and model access controls?</div><div style="display:flex;gap:8px;font-size:13px;color:#4A4A4A;padding:4px 0;"><span style="color:#2E74B5;font-weight:800;flex-shrink:0;">3.</span>What does success look like for your CISO's AI security mandate by end of year?</div></div>
+      <div style="padding:16px;background:#EBF4FB;border-radius:10px;"><div class="qlabel" style="margin-bottom:10px;">Objection Handling</div><div style="font-size:13px;color:#4A4A4A;padding:4px 0;"><span style="color:#EF4444;font-weight:700;">▸ </span>"We have existing vendors": Ask which were built specifically for AI workload threat detection — not retrofitted. Name the gap.</div><div style="font-size:13px;color:#4A4A4A;padding:4px 0;"><span style="color:#EF4444;font-weight:700;">▸ </span>"Not evaluating right now": Reference the CISO mandate from their earnings call. Offer a peer briefing, not a sales call.</div></div>
+    </div>
+  </div>
+
+  <!-- Executive Handoff -->
+  <div class="card card-dark">
+    <div class="sec-head"><div class="sec-icon-light">✉️</div><h2 class="sec-title" style="color:#DCE9F5;">Executive Handoff</h2></div>
+    <p style="margin:0;font-size:15px;color:#B8D4F0;line-height:1.8;font-style:italic;">"JPMorgan Chase is one of our highest-priority enterprise accounts — and the window is open right now. A public CISO mandate for AI-powered threat detection, 400+ security engineering hires, regulatory pressure on AI risk, and $1.5B+ in AI investment creating new attack surfaces their current stack can't see. Every signal points to an active evaluation this quarter. We need executive-to-executive engagement before the shortlist closes — a peer CISO conversation or private advisory briefing is the right first move. This is a generational deal opportunity if we move now."</p>
+  </div>
+
+  <!-- Activation header -->
+  <div style="margin-bottom:24px;padding-top:16px;border-top:2px dashed #DCE9F5;">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#2E74B5;margin-bottom:4px;">Activation Materials</div>
+    <div style="font-size:22px;font-weight:900;letter-spacing:-.03em;">Ready to deploy for JPMorgan Chase</div>
+  </div>
+
+  <!-- 3-Touch Outreach -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">📧</div><h2 class="sec-title">3-Touch Outreach Sequence</h2></div>
+    <div style="margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="touch-num">1</div>
+        <div style="flex:1;"><span style="font-size:13px;font-weight:700;">Day 1</span><span style="font-size:12px;color:#888;margin:0 8px;">·</span><span style="font-size:12px;color:#4A4A4A;">Email</span><span style="font-size:12px;color:#888;margin:0 8px;">·</span><span style="font-size:12px;color:#2E74B5;font-weight:600;">To: CISO</span></div>
+      </div>
+      <div class="email-box" style="margin-left:38px;">
+        <div class="mono">Subject: The attack surface your AI investment just created</div>
+        <div class="body-text">JPMorgan's $1.5B AI commitment and 200+ models in production have created threat vectors that your current security stack wasn't built to see — AI inference endpoints, model access controls, and training pipeline vulnerabilities are a different category of risk.
+
+I'd like to share how organizations at your scale are addressing this gap specifically. Would a 20-minute briefing make sense this week?</div>
+      </div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="touch-num">2</div>
+        <div style="flex:1;"><span style="font-size:13px;font-weight:700;">Day 5</span><span style="font-size:12px;color:#888;margin:0 8px;">·</span><span style="font-size:12px;color:#4A4A4A;">Email</span><span style="font-size:12px;color:#888;margin:0 8px;">·</span><span style="font-size:12px;color:#2E74B5;font-weight:600;">To: CISO</span></div>
+      </div>
+      <div class="email-box" style="margin-left:38px;">
+        <div class="mono">Subject: Peer benchmark: AI threat detection at top-5 banks</div>
+        <div class="body-text">Following up — we've published a benchmark showing how JPMorgan's peer institutions are approaching AI-specific threat detection. The gap between legacy security tools and AI-native platforms is measurable.
+
+Worth 15 minutes to compare your current approach against the benchmark?</div>
+      </div>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+        <div class="touch-num">3</div>
+        <div style="flex:1;"><span style="font-size:13px;font-weight:700;">Day 12</span><span style="font-size:12px;color:#888;margin:0 8px;">·</span><span style="font-size:12px;color:#4A4A4A;">Email</span><span style="font-size:12px;color:#888;margin:0 8px;">·</span><span style="font-size:12px;color:#2E74B5;font-weight:600;">To: CISO</span></div>
+      </div>
+      <div class="email-box" style="margin-left:38px;">
+        <div class="mono">Subject: One question for you</div>
+        <div class="body-text">Last reach-out on this — one direct question: does your current security stack have visibility into inference endpoint activity and AI model access patterns?
+
+If not, that's a conversation worth having before Q4.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slack Alert -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">💬</div><h2 class="sec-title">Slack Account Alert</h2></div>
+    <div style="font-size:13px;color:#4A4A4A;margin-bottom:14px;">Channel: <span style="font-weight:700;color:#2E74B5;">#jpmorgan-account-team</span></div>
+    <div class="slack-dark">
+      <div style="display:flex;align-items:flex-start;gap:12px;">
+        <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg,#1C3557,#2E74B5);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">⚡</div>
+        <div style="flex:1;">
+          <div class="slack-bot">AMPA Bot</div>
+          <div class="slack-text">🚨 *TIER A BRIEF GENERATED: JPMorgan Chase*
+
+*Why now:* CISO mandate for AI-powered threat detection · $1.5B+ AI investment creating new attack surfaces · 400+ security engineering hires active
+
+*Recommended motion:* Executive ABM — 1:1 CISO outreach only. Do NOT put into general demand gen programs.
+
+*Action needed:* @AE confirm this is your priority account this quarter. @SDR hold on outreach until AE approves the executive entry strategy.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Templates -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">✉️</div><h2 class="sec-title">Email Templates</h2></div>
+    <div style="padding:18px;background:#EBF4FB;border-radius:12px;margin-bottom:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+        <div><div class="qlabel">Executive Prospect Email</div><div style="font-size:12px;color:#4A4A4A;margin-top:2px;">To: CISO</div></div>
+      </div>
+      <div style="background:#fff;border-radius:8px;padding:14px;border:1px solid #D0DCE8;">
+        <div class="mono">Subject: The threat vector your AI investment just created</div>
+        <div class="body-text">JPMorgan's commitment to 200+ AI models in production is impressive — and it's created a new category of threat exposure that legacy security tools weren't designed to see. AI inference endpoints, model access controls, and training pipeline integrity are distinct attack surfaces from traditional IT infrastructure.
+
+Organizations at JPMorgan's scale that have addressed this proactively have seen measurably faster threat detection and significantly lower regulatory risk exposure on AI deployments.
+
+I'd like to offer a private briefing with our financial services security team — 30 minutes, no pitch, just a framework conversation about AI-specific threat modeling. Would that be worth your time?</div>
+      </div>
+    </div>
+    <div style="padding:18px;background:#EBF4FB;border-radius:12px;">
+      <div class="qlabel" style="margin-bottom:10px;">LinkedIn Connection Message</div>
+      <div style="font-size:13px;color:#4A4A4A;line-height:1.65;font-style:italic;">"Teresa — impressive commitment to AI at JPMorgan. I work with CISOs navigating the security implications of large-scale AI deployments. The threat surface created by 200+ production models is a distinct challenge from traditional security. Worth a brief conversation?"</div>
+      <div style="font-size:11px;color:#888;margin-top:8px;">187/280 characters</div>
+    </div>
+  </div>
+
+  <!-- LinkedIn Ad Targeting -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">🎯</div><h2 class="sec-title">LinkedIn Ad Targeting Spec</h2></div>
+    <div class="grid2" style="margin-bottom:16px;">
+      <div class="muted"><div class="qlabel" style="margin-bottom:10px;">Job Titles</div><div><span class="pill">CISO</span><span class="pill">VP Security Engineering</span><span class="pill">Director Zero Trust Architecture</span><span class="pill">Head of Cybersecurity</span><span class="pill">Chief Risk Officer</span></div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:10px;">Seniority & Company Size</div><div><span class="pill">Director</span><span class="pill">VP</span><span class="pill">C-Suite</span><span class="pill">10,001+ employees</span></div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:10px;">Skills & Topics</div><div><span class="pill">Zero Trust Security</span><span class="pill">Cloud Security</span><span class="pill">AI Risk Management</span><span class="pill">Threat Intelligence</span></div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:10px;">LinkedIn Groups</div><div><span class="pill">CISO Forum</span><span class="pill">Financial Services Security Leaders</span><span class="pill">Enterprise Security Architecture</span></div></div>
+    </div>
+    <div style="padding:14px 16px;background:#EBF4FB;border-radius:10px;border:1px solid #DCE9F5;">
+      <div class="qlabel" style="color:#2E74B5;margin-bottom:6px;">Ad Angle</div>
+      <div style="font-size:13px;color:#1C3557;font-weight:500;">Lead with the AI attack surface gap — "Your AI models are now a threat vector your security stack can't see" — not product features. Target urgency around regulatory pressure and CISO accountability for AI-specific risk.</div>
+    </div>
+  </div>
+
+  <!-- LinkedIn Ad Copy -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">📱</div><h2 class="sec-title">LinkedIn Ad Copy</h2></div>
+    <div style="font-size:12px;font-weight:700;color:#1C3557;margin-bottom:12px;text-transform:uppercase;letter-spacing:.06em;">Single Image Ad — Variation A (Awareness)</div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Headline</span><span class="ad-counter" style="color:#22C55E;">43/60 ✓</span></div><textarea class="ad-textarea" rows="1">Your AI Is Now an Attack Surface</textarea></div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Intro Text</span><span class="ad-counter" style="color:#22C55E;">89/120 ✓</span></div><textarea class="ad-textarea" rows="2">200+ AI models in production means 200+ new threat vectors. Legacy security tools weren't built to see them.</textarea></div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Visual Direction</span><span></span></div><textarea class="ad-textarea" rows="1">Dark background, neural network visualization with security lock — enterprise authority, no stock photos</textarea></div>
+
+    <div style="font-size:12px;font-weight:700;color:#1C3557;margin:16px 0 12px;text-transform:uppercase;letter-spacing:.06em;">Single Image Ad — Variation B (Pain Point)</div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Headline</span><span class="ad-counter" style="color:#22C55E;">39/60 ✓</span></div><textarea class="ad-textarea" rows="1">AI Security Gaps Cost CISOs Their Jobs</textarea></div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Intro Text</span><span class="ad-counter" style="color:#22C55E;">75/120 ✓</span></div><textarea class="ad-textarea" rows="2">Regulators now require AI-specific threat monitoring. Is your stack ready?</textarea></div>
+
+    <div style="font-size:12px;font-weight:700;color:#1C3557;margin:16px 0 12px;text-transform:uppercase;letter-spacing:.06em;">Message Ad (InMail)</div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Subject</span><span class="ad-counter" style="color:#22C55E;">40/55 ✓</span></div><textarea class="ad-textarea" rows="1">The AI attack surface you might not see yet</textarea></div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Body</span><span class="ad-counter" style="color:#22C55E;">163/300 ✓</span></div><textarea class="ad-textarea" rows="3">JPMorgan's AI investment created new threat vectors legacy tools weren't built for. I'd like to share how peer CISOs at your scale are addressing this specifically — no pitch, just a framework conversation.</textarea></div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">CTA</span><span class="ad-counter" style="color:#22C55E;">13/18 ✓</span></div><textarea class="ad-textarea" rows="1">Get the brief</textarea></div>
+
+    <div style="font-size:12px;font-weight:700;color:#1C3557;margin:16px 0 12px;text-transform:uppercase;letter-spacing:.06em;">Carousel Headlines</div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Card 1</span><span class="ad-counter" style="color:#22C55E;">30/43 ✓</span></div><textarea class="ad-textarea" rows="1">AI Creates New Attack Surfaces</textarea></div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Card 2</span><span class="ad-counter" style="color:#22C55E;">27/43 ✓</span></div><textarea class="ad-textarea" rows="1">Legacy Tools Can't See Them</textarea></div>
+    <div class="ad-field"><div class="ad-label-row"><span class="ad-label">Card 3</span><span class="ad-counter" style="color:#22C55E;">35/43 ✓</span></div><textarea class="ad-textarea" rows="1">Here's What AI-Native Security Does</textarea></div>
+  </div>
+
+  <!-- Paid Media -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">🔍</div><h2 class="sec-title">Paid Media Keywords</h2></div>
+    <div class="grid2" style="margin-bottom:14px;">
+      <div class="muted"><div class="qlabel" style="margin-bottom:8px;">Intent Keywords (Demandbase / Bombora)</div><div><span class="pill">AI security platform</span><span class="pill">zero trust architecture</span><span class="pill">AI threat detection</span><span class="pill">ML model security</span><span class="pill">financial services cybersecurity</span></div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:8px;">Search Keywords (Google / Bing)</div><div><span class="pill">AI-native security</span><span class="pill">zero trust AI workloads</span><span class="pill">enterprise security platform</span><span class="pill">AI model protection</span></div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:8px;">Bombora Topics</div><div><span class="pill">Cybersecurity</span><span class="pill">Zero Trust Security</span><span class="pill">AI Risk Management</span></div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:8px;">G2 Categories</div><div><span class="pill">Network Security</span><span class="pill">AI Security</span><span class="pill">Zero Trust Platforms</span></div></div>
+    </div>
+    <div style="padding:14px;background:#EBF4FB;border-radius:10px;border:1px solid #DCE9F5;"><div class="qlabel" style="margin-bottom:6px;">Ad Headline</div><div style="font-size:14px;font-weight:700;color:#1C3557;margin-bottom:6px;">"Secure Your AI Before Attackers Do"</div><div style="font-size:13px;color:#4A4A4A;">AI models create new attack surfaces. See how financial services leaders protect them. → Get the CISO Brief</div></div>
+  </div>
+
+  <!-- Field Marketing -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">🎪</div><h2 class="sec-title">Field Marketing</h2></div>
+    <div class="grid3" style="margin-bottom:14px;">
+      <div class="muted"><div class="qlabel" style="margin-bottom:4px;">Event 1</div><div class="qval-strong">Private CISO roundtable at RSA Conference</div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:4px;">Event 2</div><div class="qval-strong">Exclusive AI Security Summit for FS CISO community</div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:4px;">Event 3</div><div class="qval-strong">Executive dinner at NVIDIA GTC Security Track</div></div>
+    </div>
+    <div class="grid2">
+      <div class="muted"><div class="qlabel" style="margin-bottom:6px;">Invite Subject</div><div class="qval">"Invitation: AI Security Risk Briefing for Financial Services CISOs — Private Roundtable at RSA"</div></div>
+      <div class="muted"><div class="qlabel" style="margin-bottom:6px;">Executive Engagement</div><div class="qval">Co-host quarterly CISO advisory board with 3 peer financial services security leaders — position as the convener, not the vendor</div></div>
+      <div class="muted" style="grid-column:1/-1;"><div class="qlabel" style="margin-bottom:6px;">Post-Event Follow-up</div><div class="qval">AI Security Readiness Assessment — personalized report benchmarking JPMorgan's AI threat detection posture against peer institutions, delivered 48hrs after event</div></div>
+    </div>
+  </div>
+
+  <!-- Zapier Workflows -->
+  <div class="card">
+    <div class="sec-head"><div class="sec-icon">⚡</div><h2 class="sec-title">Activation Workflows</h2></div>
+    <div style="font-size:13px;color:#4A4A4A;margin-bottom:16px;">7 pre-built automation workflows — each step shows exactly what triggers, what tool runs, and what it produces.</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+
+      <!-- WF 1 -->
+      <details style="border-radius:12px;border:1.5px solid #B8D4F5;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#E8F1FB;cursor:pointer;list-style:none;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:8px;background:#1A73E8;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">📄</div><div><div style="font-size:13px;font-weight:700;">Google Doc Creative Brief</div><div style="font-size:12px;color:#4A4A4A;">Creates formatted brief + targeting spec for designer</div></div></div>
+          <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;"><div style="text-align:center;padding:4px 10px;background:#1A73E8;border-radius:6px;"><div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.06em;">Saves</div><div style="font-size:12px;font-weight:900;color:#fff;">2–3 hrs</div></div></div>
+        </summary>
+        <div style="padding:20px;background:#E8F1FB;border-radius:0 0 12px 12px;border:1.5px solid #B8D4F5;border-top:none;">
+          <div class="wf-step"><div class="wf-step-num" style="background:#1C3557;">1</div><div><div style="font-size:12px;font-weight:700;color:#1C1C1C;">AMPA</div><div style="font-size:12px;color:#4A4A4A;">Generates creative brief, 3 ad copy variations, LinkedIn targeting spec, and carousel headlines</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#22C55E;">2</div><div><div style="font-size:12px;font-weight:700;color:#1C1C1C;">Zapier</div><div style="font-size:12px;color:#4A4A4A;">Trigger: Activation generated → formats content into structured document sections with headings and character counts</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#1A73E8;">3</div><div><div style="font-size:12px;font-weight:700;color:#1C1C1C;">Google Docs</div><div style="font-size:12px;color:#4A4A4A;">Creates Doc: '[JPMorgan Chase] LinkedIn Campaign Brief — [Date]' with all sections, character counts, and image specs (1200×627px Single Image, 1080×1080px Carousel)</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#1A73E8;">4</div><div><div style="font-size:12px;font-weight:700;color:#1C1C1C;">Slack</div><div style="font-size:12px;color:#4A4A4A;">Posts to #design-requests: 'Creative brief ready for JPMorgan Chase LinkedIn campaign — [Doc link]. Designer deadline: [Date]'</div></div></div>
+          <div style="margin-top:12px;padding:10px 14px;background:#FEF9C3;border-radius:8px;border:1px solid #FDE68A;font-size:12px;color:#854D0E;"><strong>⚠️ Manual step: </strong>Designer creates graphics to spec, uploads to Campaign Manager, marks Doc as 'Creative complete'</div>
+        </div>
+      </details>
+
+      <!-- WF 3 -->
+      <details style="border-radius:12px;border:1.5px solid #FDE68A;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#FEF9C3;cursor:pointer;list-style:none;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:8px;background:#E8A400;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">🙋</div><div><div style="font-size:13px;font-weight:700;">SDR Slack Brief + Sequence Alert</div><div style="font-size:12px;color:#4A4A4A;">Sends SDR their persona, angle, and Outreach sequence link</div></div></div>
+          <div style="text-align:center;padding:4px 10px;background:#E8A400;border-radius:6px;flex-shrink:0;"><div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.06em;">Saves</div><div style="font-size:12px;font-weight:900;color:#fff;">1 hr</div></div>
+        </summary>
+        <div style="padding:20px;background:#FEF9C3;border:1.5px solid #FDE68A;border-top:none;">
+          <div class="wf-step"><div class="wf-step-num" style="background:#1C3557;">1</div><div><div style="font-size:12px;font-weight:700;">AMPA</div><div style="font-size:12px;color:#4A4A4A;">Generates persona analysis, SDR outreach angle, 3-touch email sequence, and discovery questions</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#22C55E;">2</div><div><div style="font-size:12px;font-weight:700;">Zapier</div><div style="font-size:12px;color:#4A4A4A;">Looks up account owner in Salesforce → finds assigned SDR Slack ID</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#E8A400;">3</div><div><div style="font-size:12px;font-weight:700;">Outreach / Salesloft</div><div style="font-size:12px;color:#4A4A4A;">Creates 3-touch sequence with Day 1, 5, 12 steps and subject lines — assigned to SDR</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#E8A400;">4</div><div><div style="font-size:12px;font-weight:700;">Slack</div><div style="font-size:12px;color:#4A4A4A;">Sends private DM: 'New Tier A brief for JPMorgan Chase — CISO · Lead with AI attack surface gap · [Sequence link]. Top question: How are you monitoring AI inference endpoints today?'</div></div></div>
+          <div style="margin-top:12px;padding:10px 14px;background:#fff;border-radius:8px;border:1px solid #FDE68A;font-size:12px;color:#854D0E;"><strong>⚠️ Manual step: </strong>SDR personalizes the first line of each email, identifies named contacts, and enrolls them in the sequence</div>
+        </div>
+      </details>
+
+      <!-- WF 5 -->
+      <details style="border-radius:12px;border:1.5px solid #B3E4F7;overflow:hidden;">
+        <summary style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#E5F5FB;cursor:pointer;list-style:none;">
+          <div style="display:flex;align-items:center;gap:10px;"><div style="width:32px;height:32px;border-radius:8px;background:#00A1E0;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">☁️</div><div><div style="font-size:13px;font-weight:700;">Salesforce Account + Campaign Record</div><div style="font-size:12px;color:#4A4A4A;">Creates/updates account record with ICP scores and campaign plan</div></div></div>
+          <div style="text-align:center;padding:4px 10px;background:#00A1E0;border-radius:6px;flex-shrink:0;"><div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.06em;">Saves</div><div style="font-size:12px;font-weight:900;color:#fff;">45 min</div></div>
+        </summary>
+        <div style="padding:20px;background:#E5F5FB;border:1.5px solid #B3E4F7;border-top:none;">
+          <div class="wf-step"><div class="wf-step-num" style="background:#1C3557;">1</div><div><div style="font-size:12px;font-weight:700;">AMPA</div><div style="font-size:12px;color:#4A4A4A;">Generates ICP score, tier, buying signals, GTM motion, and campaign theme</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#22C55E;">2</div><div><div style="font-size:12px;font-weight:700;">Zapier</div><div style="font-size:12px;color:#4A4A4A;">Searches Salesforce for existing JPMorgan Chase account record</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#00A1E0;">3</div><div><div style="font-size:12px;font-weight:700;">Salesforce</div><div style="font-size:12px;color:#4A4A4A;">Updates Account: sets ICP Score (9.2), Tier (A), GTM Motion (Executive ABM). Attaches full brief as Note. Logs activity: 'AMPA brief generated [date]'</div></div></div>
+          <div class="wf-connector"></div>
+          <div class="wf-step"><div class="wf-step-num" style="background:#00A1E0;">4</div><div><div style="font-size:12px;font-weight:700;">Salesforce</div><div style="font-size:12px;color:#4A4A4A;">Creates Campaign record: 'JPMorgan Chase ABM Campaign Q3 2025' — Status: Planning, Type: ABM, linked to account</div></div></div>
+          <div style="margin-top:12px;padding:10px 14px;background:#fff;border-radius:8px;border:1px solid #B3E4F7;font-size:12px;color:#854D0E;"><strong>⚠️ Manual step: </strong>Campaign manager reviews, adds budget, adjusts dates, links to open opportunities</div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+
+  <!-- How I built this -->
+  <div style="margin-top:8px;">
+    <details>
+      <summary style="background:none;border:1.5px solid #D0DCE8;cursor:pointer;font-family:inherit;color:#4A4A4A;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;display:flex;align-items:center;gap:8px;list-style:none;">
+        <span>ℹ️</span> How I built this
+      </summary>
+      <div style="margin-top:2px;padding:28px;border-radius:16px;border:1.5px solid #DCE9F5;background:#EBF4FB;">
+        <div style="font-size:16px;font-weight:900;letter-spacing:-.02em;margin-bottom:6px;">Account Marketing Planning Agent (AMPA)</div>
+        <div style="font-size:13px;color:#2E74B5;font-weight:700;margin-bottom:20px;">Built by Megan Cleary · Senior Demand Generation & Campaign Marketing Leader</div>
+        <p style="margin:0 0 16px;font-size:14px;color:#4A4A4A;line-height:1.75;">AMPA is an independent project I built to show how AI can operationalize enterprise demand generation and ABM at scale. The strategic framework draws on methodology I developed throughout my career — including work that contributed to <strong style="color:#1C1C1C;">$23.5M in bookings</strong> and <strong style="color:#1C1C1C;">$120M+ in influenced pipeline</strong> — but this tool itself was built entirely on my own, outside of any employer.</p>
+        <div class="grid2" style="margin-bottom:16px;">
+          <div style="padding:16px;background:#fff;border-radius:12px;border:1px solid #DCE9F5;"><div style="font-size:12px;font-weight:800;color:#1C3557;margin-bottom:8px;">🧠 AI Model</div><div style="font-size:13px;color:#4A4A4A;line-height:1.6;">Anthropic Claude (claude-sonnet-4) via 7 sequential API calls — 3 for the account brief, 4 for activation materials — each engineered to stay within token limits while covering the full ABM workflow</div></div>
+          <div style="padding:16px;background:#fff;border-radius:12px;border:1px solid #DCE9F5;"><div style="font-size:12px;font-weight:800;color:#1C3557;margin-bottom:8px;">⚙️ Frontend</div><div style="font-size:13px;color:#4A4A4A;line-height:1.6;">React application built independently — editable ad copy fields with live LinkedIn character counters, copy-to-clipboard on all outreach assets, and a SaaS UI designed for demand gen and sales teams</div></div>
+          <div style="padding:16px;background:#fff;border-radius:12px;border:1px solid #DCE9F5;"><div style="font-size:12px;font-weight:800;color:#1C3557;margin-bottom:8px;">🔗 What It Generates</div><div style="font-size:13px;color:#4A4A4A;line-height:1.6;">Account scoring, buying signal analysis, persona mapping, campaign strategy, outreach copy, Slack alerts, LinkedIn ad copy to spec, intent keywords, field marketing angles, and Zapier automation suggestions</div></div>
+          <div style="padding:16px;background:#fff;border-radius:12px;border:1px solid #DCE9F5;"><div style="font-size:12px;font-weight:800;color:#1C3557;margin-bottom:8px;">⚠️ What Comes Next</div><div style="font-size:13px;color:#4A4A4A;line-height:1.6;">Phase 2 is a results integration agent: pulling pipeline, campaign performance, and opportunity data back in to generate optimization recommendations — closing the loop between planning and execution</div></div>
+        </div>
+        <div style="padding:16px 20px;background:#fff;border-radius:12px;border:1px solid #DCE9F5;margin-bottom:16px;"><div style="font-size:12px;font-weight:800;color:#1C3557;margin-bottom:8px;">🚀 The Bigger Vision</div><p style="margin:0;font-size:13px;color:#4A4A4A;line-height:1.7;">AMPA is Phase 1 of a two-phase revenue marketing system. Phase 1 covers planning and activation — account intelligence, campaign strategy, and outreach. Phase 2 would be a results integration agent: pulling campaign performance, pipeline influenced, and opportunity data back in, then generating optimization recommendations automatically. Together they create a closed-loop demand gen engine where AI handles both the planning and the learning.</p></div>
+        <div>
+          <span class="built-tag">Claude API</span><span class="built-tag">React</span><span class="built-tag">Prompt Engineering</span><span class="built-tag">Zapier-ready</span><span class="built-tag">Demandbase</span><span class="built-tag">Salesforce</span><span class="built-tag">Outreach</span><span class="built-tag">LinkedIn Ads</span><span class="built-tag">ABM Framework</span><span class="built-tag">Field Marketing</span><span class="built-tag">LinkedIn Ad Specs</span>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <div class="footer-icon">⚡</div>
+      <div><div style="font-size:12px;font-weight:800;">Account Marketing Planning Agent</div><div style="font-size:11px;color:#888;">AMPA v2.0 · Built with Claude API + React</div></div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:12px;font-weight:700;color:#4A4A4A;">Built by Megan Cleary</div>
+      <div style="font-size:11px;color:#888;">Senior Demand Generation & Campaign Marketing Leader</div>
+      <a href="https://linkedin.com/in/megcleary" target="_blank" style="font-size:11px;color:#2E74B5;font-weight:600;">linkedin.com/in/megcleary</a>
+      <div style="font-size:10px;color:#888;margin-top:2px;">© 2026 Megan Cleary. All rights reserved. Unauthorized reproduction prohibited.</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
